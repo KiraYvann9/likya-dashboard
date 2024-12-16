@@ -1,0 +1,33 @@
+.login{
+    @apply w-1/2 h-auto flex flex-col items-center justify-center gap-10
+}
+
+form{
+    @apply w-full flex flex-col items-center justify-center gap-4
+}
+
+.label{
+    @apply text-muted-foreground text-xl 
+}
+
+sup{
+    @apply text-red-500
+}
+
+.form_group{
+    @apply w-full
+}
+input{
+    outline: none;
+    @apply text-xl
+}
+select{
+    @apply ml-10
+}
+.input{
+    @apply h-14 text-xl border border-custom_color-green rounded-md
+}
+
+.btn{
+    @apply w-full h-14 bg-custom_color-green text-white text-xl rounded-md
+}

@@ -1,0 +1,10 @@
+.sidebar{
+    @apply w-[200px] h-screen bg-custom_color-blue py-8 flex flex-col items-center gap-24
+}
+
+ul{
+    @apply w-full
+}
+a{
+    @apply w-full flex text-white gap-4 border-t-2 border-b-2 border-t-transparent border-b-transparent items-center p-2 hover:bg-white/20 hover:border-t-white hover:border-b-white
+}

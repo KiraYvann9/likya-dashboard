@@ -1,0 +1,11 @@
+.main_container{
+    @apply w-full min-h-screen flex bg-gray-200
+}
+
+.content{
+ @apply w-full
+}
+
+.main{
+    @apply w-full h-full p-4
+}
