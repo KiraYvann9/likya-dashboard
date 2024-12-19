@@ -28,10 +28,12 @@ const schema = z.object({
 
 export const LoginForm = () => {
 
+
     const [showPWD, setShowPWD] = useState<boolean>(false)
     const router = useRouter()
 
     const login = useUserStore(s => s.login)
+    const user = useUserStore(s => s.user)
     const form = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -45,13 +47,19 @@ export const LoginForm = () => {
         onSuccess: ()=>{
             toast.success('Bienvenue !')
             form.reset()
-            router.push('/dashboard')
+            user?.user?.role?.slug !== 'super-administrateur'?router.push('/users') : router.push('/settings')
+
+        },
+        onError(error: any){
+
+            console.log('Error :', error)
+            //error.status === 403 && toast.error(error.message)
+
+            toast.error(error.response.data.message_error)
         }
     })
 
     const submit =(data: z.infer<typeof schema>) =>{
-        console.log('Login data: ', data)
-
         mutation.mutate(data)
     }
 

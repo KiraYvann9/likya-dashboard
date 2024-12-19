@@ -22,7 +22,7 @@ export const SidebarItems: sidebarItemType[] = [
         title: 'Utilisateurs',
         icon: UsersRound,
         link: "/users",
-        permission: ['super-administrateur', 'prestataire']
+        permission: ['prestataire']
     },
     {
         id:  3,
