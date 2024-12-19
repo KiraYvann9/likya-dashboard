@@ -1,5 +1,5 @@
 .sidebar{
-    @apply w-[200px] h-screen bg-custom_color-blue py-8 flex flex-col items-center gap-24
+    @apply w-[200px] min-h-screen bg-custom_color-blue py-8 flex flex-col items-center gap-24
 }
 
 ul{

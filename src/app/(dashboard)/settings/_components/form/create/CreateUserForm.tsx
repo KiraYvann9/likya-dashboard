@@ -26,6 +26,7 @@ import PhoneInput from 'react-phone-number-input'
 import {Button} from "@/components/ui/button";
 import {Eye, EyeClosed, Plus} from "lucide-react";
 import {useUserModal} from "@/stores/useModalStore";
+import Spinner from "@/components/spinner";
 
 export const CreateUserForm = () =>{
 
@@ -47,15 +48,13 @@ export const CreateUserForm = () =>{
         },
     })
     const queryClient = useQueryClient()
-    const [selectedRole, setSelectedRole] = useState<any>()
-    const router = useRouter()
 
     const getRoles = async()=>{
         const req = await fetchData('/roles')
         return req.items
     }
 
-    const {data: roles, isLoading, isError} = useQuery({
+    const {data: roles, isLoading: roleIsLoading, isError} = useQuery({
         queryKey: ['roles'],
         queryFn: getRoles,
     })
@@ -80,9 +79,7 @@ export const CreateUserForm = () =>{
     })
 
     const  onSubmit = async(data: any) => {
-        //mutation.mutate(data)
-
-        console.log(data)
+        mutation.mutate(data)
     }
     return(
         <Form {...form}>
@@ -118,7 +115,7 @@ export const CreateUserForm = () =>{
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
                                 <SelectTrigger className={'user_input'}>
-                                    <SelectValue placeholder="Sélectionnez un rôle" />
+                                    { roleIsLoading? <Spinner/> : <SelectValue placeholder="Sélectionnez un rôle" />}
                                 </SelectTrigger>
                             </FormControl>
                             <SelectContent>
