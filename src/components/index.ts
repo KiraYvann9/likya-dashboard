@@ -6,5 +6,6 @@ import {DataTable} from "@/components/DataTableComponent";
 import {SwitchComponent} from "@/components/Switch/SwitchComponent";
 import {Roles} from "@/components/roles/Roles";
 import {Permissions} from "@/components/permissions/Permissions";
+import {ProfileComponent} from "@/components/profile/ProfileComponent";
 
-export {LoginForm, SidebarComponent, NavComponent, MaxWidthWrapper, DataTable, SwitchComponent, Roles, Permissions}
+export {LoginForm, SidebarComponent, NavComponent, MaxWidthWrapper, DataTable, SwitchComponent, Roles, Permissions, ProfileComponent}
