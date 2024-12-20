@@ -1,0 +1,21 @@
+form{
+    @apply w-full flex flex-col gap-1 items-end
+}
+.form-group{
+    @apply flex flex-col gap-2 w-full;
+}
+
+.input-group{
+    @apply w-full
+}
+
+input{
+    outline: none;
+    @apply text-xl
+}
+
+.user_input{
+    @apply h-10 border border-custom_color-green rounded-md
+}
+
+
