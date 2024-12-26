@@ -53,8 +53,6 @@ export const LoginForm = () => {
         onError(error: any){
 
             console.log('Error :', error)
-            //error.status === 403 && toast.error(error.message)
-
             toast.error(error.response.data.message_error)
         }
     })

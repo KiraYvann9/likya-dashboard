@@ -14,7 +14,7 @@ export const fetchData = async(endpoint: string) =>{
         })
         return req.data
     }catch(err){
-        console.log('Fecth error', err);
+        throw err
 
     }
 }
@@ -30,7 +30,7 @@ export const fetchOneData = async(endpoint: string) =>{
         })
         return req.data
     }catch(err){
-        console.log('Fecth error', err);
+        throw err
 
     }
 }
@@ -46,8 +46,7 @@ export const postData = async(endpoint: string, data: any) =>{
         })
         return req.data
     }catch(err){
-        console.log('Fecth error', err);
-
+        throw err
     }
 }
 
@@ -62,8 +61,7 @@ export const updateData = async(endpoint: string, data: any) =>{
         })
         return req.data
     }catch(err){
-        console.log('Fecth error', err);
-
+        throw err
     }
 }
 export const deleData = async(endpoint: string) =>{
@@ -77,7 +75,7 @@ export const deleData = async(endpoint: string) =>{
         })
         return req.data
     }catch(err){
-        console.log('Fecth error', err);
+        throw err
 
     }
 }

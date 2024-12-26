@@ -1,5 +1,5 @@
 .login{
-    @apply w-1/2 h-auto flex flex-col items-center justify-center gap-10
+    @apply w-1/3 h-auto flex flex-col items-center justify-center gap-10
 }
 
 form{

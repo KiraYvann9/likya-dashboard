@@ -32,11 +32,11 @@ export const EditUserForm = ({user}:{user: any}) =>{
     const form = useForm({
         resolver: zodResolver(editUserFormSchema),
         defaultValues: {
-            fullname: user ? user?.fullname : undefined,
-            role: user? user?.role?._id : undefined,
+            fullname: user ? user?.fullname : "",
+            role: user? user?.role?._id : "",
             attributes: {
-                address: user? user?.attributes?.address : undefined,
-                compte_bancaire: user? user?.attributes?.compte_bancaire : undefined,
+                address: user? user?.attributes?.address : "",
+                compte_bancaire: user? user?.attributes?.compte_bancaire : "",
             }
         },
     })
@@ -59,30 +59,31 @@ export const EditUserForm = ({user}:{user: any}) =>{
 
     const mutation = useMutation({
         mutationFn: updateUser,
-        onSuccess: () => {
+        onSuccess: (data) => {
             queryClient.invalidateQueries({queryKey: ['users']})
+            console.log('Update Data :', data)
             toast.success('Modifié avec succès !')
             form.reset()
             closeModal()
         },
-        onError:(err) =>{ console.log('User Error :', err);
-            toast.error(err?.message)
+        onError:(err: any) =>{
+            console.log('User Error :', err);
+            err?.status === 403 ? toast.error('Vous n\'avez pas la permission pour effectuer cette action', {duration: 5000}) : toast.error(err?.message)
         }
     })
 
     const  onSubmit = async(data: any) => {
-
         console.log('data',data)
         mutation.mutate(data)
     }
     return(
         <Form {...form}>
-            <form action="" onSubmit={form.handleSubmit(onSubmit)}>
+            <form action="" onSubmit={form.handleSubmit(onSubmit)} className={'w-full'}>
                 <FormField render={({field}) => (
-                    <FormItem className={'input-group'}>
+                    <FormItem className={'input-group w-full'}>
                         <FormLabel>Nom et prénoms <sup>*</sup></FormLabel>
                         <FormControl>
-                            <Input {...field} type={'text'} className={'user_input'}
+                            <Input {...field} type={'text'} className={'h-10 border border-custom_color-green rounded-md'}
                                    />
                         </FormControl>
                         <FormMessage/>
@@ -90,11 +91,11 @@ export const EditUserForm = ({user}:{user: any}) =>{
                 )} name={'fullname'} control={form.control}/>
 
                 <FormField render={({field}) => (
-                    <FormItem className={'input-group'}>
+                    <FormItem className={'input-group w-full'}>
                         <FormLabel>Rôle <sup>*</sup></FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value} >
                             <FormControl>
-                                <SelectTrigger className={'user_input'}>
+                                <SelectTrigger className={'h-10 border border-custom_color-green rounded-md'}>
                                     {roleIsLoding? <Spinner/> : <SelectValue placeholder="Sélectionnez un rôle"/>}
                                 </SelectTrigger>
                             </FormControl>
@@ -113,19 +114,19 @@ export const EditUserForm = ({user}:{user: any}) =>{
 
 
                 <FormField render={({field}) => (
-                    <FormItem className={'input-group'}>
+                    <FormItem className={'input-group w-full'}>
                         <FormLabel>Adresse <sup>*</sup></FormLabel>
                         <FormControl>
-                            <Input {...field} type={'text'} className={'user_input'}/>
+                            <Input {...field} type={'text'} className={'h-10 border border-custom_color-green rounded-md'}/>
                         </FormControl>
                     </FormItem>
                 )} name={'attributes.address'} control={form.control}/>
                 <FormField
                     render={({field}) => (
-                        <FormItem className='input-group'>
+                        <FormItem className='input-group w-full'>
                             <FormLabel> N° Compte Banquaire <sup>*</sup></FormLabel>
                             <FormControl>
-                                <Input {...field} type={'text'} className={'user_input'}/>
+                                <Input {...field} type={'text'} className={'h-10 border border-custom_color-green rounded-md'}/>
                             </FormControl>
                         </FormItem>
                     )}
