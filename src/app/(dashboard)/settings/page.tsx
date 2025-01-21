@@ -71,7 +71,6 @@ export default function SettingsPage(){
         console.log(data)
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     { isError && toast.error('Quelque chose s\'est mal passée')}
     return(
         <div className={'settings'}>

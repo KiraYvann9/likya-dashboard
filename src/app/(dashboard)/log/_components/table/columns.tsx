@@ -17,7 +17,6 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {Schema} from "./schema";
-import {SwitchComponent} from "@/components";
 import {useUserModal} from "@/stores/useModalStore";
 
 import {format} from "date-fns"
@@ -59,7 +58,7 @@ export const columns: ColumnDef<Schema>[] = [
                 </Button>
             )
         },
-        cell: ({ row }) => (
+        cell: ({ }) => (
             <div className="capitalize">{}</div>
         ),
     },

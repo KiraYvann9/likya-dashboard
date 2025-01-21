@@ -3,7 +3,6 @@ import {
     ChartPie,
     HandCoins,
     History,
-    Home,
     LucideIcon,
     QrCode,
     SquareActivity,

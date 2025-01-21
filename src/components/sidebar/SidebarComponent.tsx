@@ -8,7 +8,6 @@ import Image from "next/image"
 import {usePathname} from "next/navigation";
 import {cn} from "@/lib/utils";
 import {useUserStore} from "@/stores/useUserStore";
-import {UserRoundPen} from "lucide-react";
 
 export const SidebarComponent =()=>{
     const user = useUserStore(s => s.user)

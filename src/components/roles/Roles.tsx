@@ -1,8 +1,8 @@
-import {CardFooter, Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {Label} from "@/components/ui/label";
-import {fetchData, postData} from "@/services/service";
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {fetchData} from "@/services/service";
+import {useQuery} from "@tanstack/react-query";
 import Spinner from "@/components/spinner";
 import {toast} from "react-hot-toast";
 import {usePermissionStore} from "@/stores/userPermissionStore";
@@ -25,7 +25,6 @@ export const Roles = ({className}:{className: string}) =>{
         queryFn: getRoles,
     })
 
-
     { isError && toast.error('Erreur lors de la connexion au serveur')}
     return(
         <Card className={className}>
@@ -34,14 +33,16 @@ export const Roles = ({className}:{className: string}) =>{
                 <CardDescription>Créez des rôles et attribuez les des permission</CardDescription>
             </CardHeader>
             <CardContent>
-                <RadioGroup defaultValue="comfortable" onValueChange={(value: any)=> {
+                <RadioGroup defaultValue="comfortable" onValueChange={
+                    
+                    (value: any)=> {
                     value.permissions.length >= 1 ? checkRole(value._id, extractPermissionCodes(value.permissions)):
                         checkRole(value._id, [])
                 }}>
 
                     {
                         roleIsLoading? <Spinner/> :
-
+                            
                             roles.map((role: any)=>{
                                 return(
 

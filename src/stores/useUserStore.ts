@@ -1,12 +1,16 @@
 import {create} from 'zustand';
-import {persist, devtools} from 'zustand/middleware';
+import {persist} from 'zustand/middleware';
 import {toast} from "react-hot-toast";
 import axios from 'axios';
 
 interface user {
+    
     user: any,
+    
     login:(data: {phonenumber: string, password: string})=>any;
+    
     updateUser : (data: any)=>any;
+    
     logOut: ()=>any;
 }
 
@@ -44,6 +48,7 @@ export const useUserStore = create<user>()(persist((set, get)=>({
             })
             set({user: null})
             return request.data
+            
         }catch(err: any){
             toast.error(err?.message)
         }

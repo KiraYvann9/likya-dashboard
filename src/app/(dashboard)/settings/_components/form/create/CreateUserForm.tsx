@@ -53,7 +53,7 @@ export const CreateUserForm = () =>{
         return req.items
     }
 
-    const {data: roles, isLoading: roleIsLoading, isError} = useQuery({
+    const {data: roles, isLoading: roleIsLoading} = useQuery({
         queryKey: ['roles'],
         queryFn: getRoles,
     })
@@ -76,7 +76,6 @@ export const CreateUserForm = () =>{
             toast(err?.message)
         }
     })
-
     const  onSubmit = async(data: any) => {
         mutation.mutate(data)
     }

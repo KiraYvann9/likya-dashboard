@@ -66,6 +66,7 @@ export const EditUserForm = ({user}:{user: any}) =>{
             form.reset()
             closeModal()
         },
+        
         onError:(err: any) =>{
             console.log('User Error :', err);
             err?.status === 403 ? toast.error('Vous n\'avez pas la permission pour effectuer cette action', {duration: 5000}) : toast.error(err?.message)
@@ -101,6 +102,7 @@ export const EditUserForm = ({user}:{user: any}) =>{
                             </FormControl>
                             <SelectContent>
                                 {
+                                    
                                     roles && roles.map((role: any) => {
                                         return (
                                             <SelectItem value={role?._id} key={role?._id}>{role?.name}</SelectItem>

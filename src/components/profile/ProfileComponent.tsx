@@ -25,7 +25,7 @@ export const ProfileComponent = () =>{
                 <SheetHeader>
                     <SheetTitle>Mon Profil</SheetTitle>
                     <SheetDescription>
-                        Effectuez des modification sur votre profil. Cliquez sur 'Mettre à jour'.
+                        Effectuez des modification sur votre profil. Cliquez sur &#39;Mettre à jour&#39;.
                     </SheetDescription>
                 </SheetHeader>
                 {
