@@ -8,7 +8,6 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {z} from "zod";
 import {fetchData, postData} from "@/services/service";
 import {toast} from "react-hot-toast";
-import {useRouter} from "next/navigation";
 import {Input} from "@/components/ui/input";
 
 import {

@@ -16,12 +16,14 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {USerType} from "./TableSchema";
+import {Schema} from "./schema";
 import {SwitchComponent} from "@/components";
 import {useUserModal} from "@/stores/useModalStore";
 
+import {format} from "date-fns"
 
-export const columns: ColumnDef<USerType>[] = [
+
+export const columns: ColumnDef<Schema>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -57,45 +59,42 @@ export const columns: ColumnDef<USerType>[] = [
                 </Button>
             )
         },
-        cell: ({  }) => (
+        cell: ({ row }) => (
             <div className="capitalize">{}</div>
         ),
     },
     {
-        accessorKey: "fullname",
-        header: "Nom et prénoms",
+        accessorKey: "user_id",
+        header: "User ID",
         cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("fullname")}</div>
+            <div className="capitalize">{row.getValue("user_id")}</div>
         ),
     },
     {
-        accessorKey: "phonenumber",
-        header: () => <div className={'text-left'}>N° Téléphone</div>,
-        cell: ({ row }) => <div className="lowercase">{row.getValue("phonenumber")}</div>,
+        accessorKey: "source",
+        header: () => <div className={'text-left'}>Source</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("source")}</div>,
     },
     {
-        accessorKey: "email",
-        header: () => <div className="text-center">E-mail</div>,
+        accessorKey: "message",
+        header: () => <div className="text-center">Message</div>,
+        cell: ({ row }) => {
+            return <div className="text-center font-medium">{row.getValue('message')}</div>
+        },
+    },
+    {
+        accessorKey: "created",
+        header: () => <div className="text-center">Date</div>,
+        cell: ({ row }) => {
+            return <div className="text-center font-medium">{format(row.getValue('created'), 'dd/MM/yyyy')}</div>
+        },
+    },
+    {
+        accessorKey: "device",
+        header: () => <div className="text-center">Device</div>,
         cell: ({ row }) => {
 
-            return <div className="text-center font-medium">{row.getValue('email')}</div>
-        },
-    },
-    {
-        accessorKey: "extras",
-        header: () => <div className="text-center">Rôle</div>,
-        cell: ({ row }) => {
-            const role = row.original.extras.role_info.name
-            return <div className="font-medium">{role}</div>
-        },
-    },
-    {
-        accessorKey: "is_active",
-        header: () => <div className="text-center">Status</div>,
-        cell: ({ row }) => {
-            return <div className="text-right font-medium">
-                <SwitchComponent status={row.getValue('is_active')} id={row.getValue('_id')}/>
-            </div>
+            return <div className="text-center font-medium">{row.getValue('device')}</div>
         },
     },
     {

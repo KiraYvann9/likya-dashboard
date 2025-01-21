@@ -1,5 +1,5 @@
 'use client'
-import {CardFooter, Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {fetchData, updateData} from "@/services/service";
 import Spinner from "@/components/spinner";
@@ -33,6 +33,7 @@ export const Permissions = ({className}:{className: string}) =>{
         queryFn: getPermissions,
     })
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     {isPermissionsError && toast.error('Erreur lors du chargement des permissions')}
 
     const givePermissions = async (data: Array<string>)=>{
@@ -53,6 +54,7 @@ export const Permissions = ({className}:{className: string}) =>{
         mutation.mutate(checkedRolePermissions)
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     {mutation.error && toast.error('Veuillez choisir un rôle')}
 
     return(
@@ -86,6 +88,7 @@ export const Permissions = ({className}:{className: string}) =>{
                                                             <Switch id="airplane-mode" checked={checkedRolePermissions.includes(item?.code)}
                                                              onCheckedChange={()=> {
                                                                  setIsPermissionChecked(true)
+                                                                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                                                                  !checkedRolePermissions.includes(item?.code) ? addPermission(item?.code):
                                                                      deletePermission(item?.code)
 

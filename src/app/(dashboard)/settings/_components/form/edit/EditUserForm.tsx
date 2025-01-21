@@ -75,7 +75,7 @@ export const EditUserForm = () =>{
         }
     })
 
-    const  onSubmit = async(data: any) => {
+    const  onSubmit = async(data: z.infer<typeof editUserFormSchema>) => {
         mutation.mutate(data)
     }
     return(

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+
 import {
     Dialog,
     DialogContent,
@@ -19,7 +19,7 @@ export function UserModal() {
                 <DialogHeader>
                     <DialogTitle>Créer un utilisateur</DialogTitle>
                     <DialogDescription>
-                        Make changes to your profile here. Click save when you're done.
+                        Make changes to your profile here. Click save when you&apos;re done.
                     </DialogDescription>
                 </DialogHeader>
 

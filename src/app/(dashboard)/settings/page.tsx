@@ -3,7 +3,7 @@
 import {Button} from "@/components/ui/button";
 import {Download, Key, UserPlus, Users} from "lucide-react";
 
-import {Form, FormField, FormItem, FormDescription, FormLabel, FormControl, FormMessage} from "@/components/ui/form";
+import {Form, FormField, FormItem, FormLabel, FormControl} from "@/components/ui/form";
 
 import './style.css'
 import {DataTable, Permissions, Roles} from "@/components";
@@ -71,6 +71,7 @@ export default function SettingsPage(){
         console.log(data)
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     { isError && toast.error('Quelque chose s\'est mal passée')}
     return(
         <div className={'settings'}>

@@ -21,7 +21,6 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import {
     Table,
     TableBody,
@@ -30,10 +29,9 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {Suspense} from "react";
 import Spinner from "@/components/spinner";
 
-export function DataTable({data, columns, isLoading}: {data: any, columns: any, isLoading: boolean}) {
+export function DataTable({data, columns, isLoading}: {data: any, columns:any, isLoading: boolean}) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
@@ -64,14 +62,7 @@ export function DataTable({data, columns, isLoading}: {data: any, columns: any, 
     return (
         <div className="w-full">
             <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filter emails..."
-                    value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("email")?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
+
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">

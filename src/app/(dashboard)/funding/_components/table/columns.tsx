@@ -16,12 +16,15 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {USerType} from "./TableSchema";
+import {Schema} from "./schema";
 import {SwitchComponent} from "@/components";
 import {useUserModal} from "@/stores/useModalStore";
 
+import {format} from "date-fns"
+import {cn} from "@/lib/utils";
 
-export const columns: ColumnDef<USerType>[] = [
+
+export const columns: ColumnDef<Schema>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -57,46 +60,53 @@ export const columns: ColumnDef<USerType>[] = [
                 </Button>
             )
         },
-        cell: ({  }) => (
+        cell: ({ row }) => (
             <div className="capitalize">{}</div>
         ),
     },
     {
-        accessorKey: "fullname",
-        header: "Nom et prénoms",
+        accessorKey: "title",
+        header: "Titre",
         cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("fullname")}</div>
+            <div className="capitalize">{row.getValue("title")}</div>
         ),
     },
     {
-        accessorKey: "phonenumber",
-        header: () => <div className={'text-left'}>N° Téléphone</div>,
-        cell: ({ row }) => <div className="lowercase">{row.getValue("phonenumber")}</div>,
+        accessorKey: "description",
+        header: () => <div className={'text-left'}>Description</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("description")}</div>,
     },
     {
-        accessorKey: "email",
-        header: () => <div className="text-center">E-mail</div>,
+        accessorKey: "target_amount",
+        header: () => <div className="text-center">Montant</div>,
+        cell: ({ row }) => {
+            return <div className="text-center font-medium">{row.getValue('target_amount')}</div>
+        },
+    },
+    {
+        accessorKey: "created_by",
+        header: () => <div className="text-center">Créer par</div>,
         cell: ({ row }) => {
 
-            return <div className="text-center font-medium">{row.getValue('email')}</div>
+            return <div className="text-center font-medium">{row.getValue('created_by')}</div>
         },
     },
     {
-        accessorKey: "extras",
-        header: () => <div className="text-center">Rôle</div>,
+        accessorKey: "created_at",
+        header: () => <div className="text-center">Date création</div>,
         cell: ({ row }) => {
-            const role = row.original.extras.role_info.name
-            return <div className="font-medium">{role}</div>
+            return <div className="text-center font-medium">{format(row.getValue('created_at'), 'dd/MM/yyyy')}</div>
         },
     },
     {
-        accessorKey: "is_active",
-        header: () => <div className="text-center">Status</div>,
+        accessorKey: "status",
+        header: ()=> <div className={'text-center'}>Status</div>,
         cell: ({ row }) => {
-            return <div className="text-right font-medium">
-                <SwitchComponent status={row.getValue('is_active')} id={row.getValue('_id')}/>
+            const status = row.getValue("status");
+            return <div className="flex justify-center items-center font-medium">
+                <div className={cn('text-[12px] w-3 h-3 bg-yellow-400 rounded-full', status =='validate'&&'bg-green-400', status =='reject'&&'bg-red-400')}/>
             </div>
-        },
+        }
     },
     {
         id: "actions",
@@ -122,6 +132,11 @@ export const columns: ColumnDef<USerType>[] = [
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={()=>openModal('DETAIL', row.original)}>Détail</DropdownMenuItem>
                         <DropdownMenuItem onClick={()=>openModal('EDIT',row.original)}>Modifier</DropdownMenuItem>
+                        <DropdownMenuSeparator/>
+                        <DropdownMenuItem onClick={()=>openModal('EDIT',row.original)}>Valider <div className={'w-2 h-2 rounded-full bg-green-400'}/> </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => openModal('EDIT', row.original)}
+                                          className={'text-red-500'}>Rejeter <div
+                            className={'w-2 h-2 rounded-full bg-red-400'}/></DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

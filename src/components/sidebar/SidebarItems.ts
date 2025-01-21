@@ -1,5 +1,16 @@
 
-import {ChartPie, History, Home, LucideIcon, QrCode, Ticket, UserRoundCog, UsersRound} from 'lucide-react'
+import {
+    ChartPie,
+    HandCoins,
+    History,
+    Home,
+    LucideIcon,
+    QrCode,
+    SquareActivity,
+    Ticket,
+    UserRoundCog,
+    UsersRound
+} from 'lucide-react'
 
 export interface sidebarItemType {
     id: number;
@@ -52,19 +63,19 @@ export const SidebarItems: sidebarItemType[] = [
         link: "/qrcode",
         permission: ['prestataire']
     },
-    // {
-    //     id:  7,
-    //     title: 'Services',
-    //     icon: Stethoscope,
-    //     link: "/qrcode",
-    //     permission: ['prestataire']
-    // },
-    // {
-    //     id:  8,
-    //     title: 'Medicaments',
-    //     icon: Pill,
-    //     link: "/qrcode",
-    //     permission: ['prestataire']
-    // },
+    {
+        id:  7,
+        title: 'Collecte',
+        icon: HandCoins,
+        link: "/funding",
+        permission: ['super-administrateur']
+    },
+    {
+        id:  8,
+        title: 'Log',
+        icon: SquareActivity,
+        link: "/log",
+        permission: ['super-administrateur']
+    },
 
 ]
