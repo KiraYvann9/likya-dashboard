@@ -22,6 +22,7 @@ import {useUserModal} from "@/stores/useModalStore";
 
 import {format} from "date-fns"
 import {cn} from "@/lib/utils";
+import { useFundraisingModalStore } from "@/stores/useFundraisingModalStore"
 
 
 export const columns: ColumnDef<Schema>[] = [
@@ -114,6 +115,8 @@ export const columns: ColumnDef<Schema>[] = [
         cell: ({ row }) => {
             const payment = row.original
             const openModal = useUserModal.getState().openModal
+
+            const confirm = useFundraisingModalStore.getState().openModal
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -133,8 +136,8 @@ export const columns: ColumnDef<Schema>[] = [
                         <DropdownMenuItem onClick={()=>openModal('DETAIL', row.original)}>Détail</DropdownMenuItem>
                         <DropdownMenuItem onClick={()=>openModal('EDIT',row.original)}>Modifier</DropdownMenuItem>
                         <DropdownMenuSeparator/>
-                        <DropdownMenuItem onClick={()=>openModal('EDIT',row.original)}>Valider <div className={'w-2 h-2 rounded-full bg-green-400'}/> </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => openModal('EDIT', row.original)}
+                        <DropdownMenuItem onClick={()=>confirm("VALIDATE", {id:row.getValue('_id'), title: row.getValue('title')})}>Valider <div className={'w-2 h-2 rounded-full bg-green-400'}/> </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => confirm("REJECT", {id:row.getValue('_id'), title: row.getValue('title')})}
                                           className={'text-red-500'}>Rejeter <div
                             className={'w-2 h-2 rounded-full bg-red-400'}/></DropdownMenuItem>
                     </DropdownMenuContent>
