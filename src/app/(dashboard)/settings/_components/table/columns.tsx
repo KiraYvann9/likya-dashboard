@@ -117,7 +117,7 @@ export const columns: ColumnDef<USerType>[] = [
                         <DropdownMenuItem
                             onClick={() => navigator.clipboard.writeText(payment._id)}
                         >
-                            Copy payment ID
+                            Copy user ID
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={()=>openModal('DETAIL', row.original)}>Détail</DropdownMenuItem>

@@ -7,34 +7,32 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-  import { Button } from "@/components/ui/button"
+
 import { cn } from "@/lib/utils"
-import { postData, updateData } from "@/services/service"
+import { updateData } from "@/services/service"
 import { useFundraisingModalStore } from "@/stores/useFundraisingModalStore"
-import { useMutation } from "@tanstack/react-query"
+import {useMutation, useQueryClient} from "@tanstack/react-query"
 import toast from "react-hot-toast"
   
   export function FundraisingModal() {
 
+    const queryClient = useQueryClient()
+
     const {isOpen, closeModal, data, type} = useFundraisingModalStore()
 
-    const validate = async()=>{
-      const response = await updateData(`/collects/${data?.id}/validate`,{})
+    const validate = async(status: 'validate' | 'reject')=>{
+      const response = await updateData(`/collects/${data?.id}/validate?status=${status}`,{})
       return response.data
     }
-    const reject = async()=>{
-      const response = await updateData(`/collects/${data?.id}/reject`,{})
-      return response.data
-    }
+
 
     const handleConfirm = () => {
       if (type === 'VALIDATE') {
-        const response = validate()
+        const response = validate('validate')
         return response
       }else{
-        const response = reject()
+        const response = validate('reject')
         return response
       }
     }
@@ -42,9 +40,11 @@ import toast from "react-hot-toast"
     const mutation = useMutation({
       mutationFn: handleConfirm,
       onSuccess: () => {
-        toast.success('La cagnote a été validée')
+          toast.success('La cagnote a été validée')
+          queryClient.invalidateQueries({queryKey: ['collects']})
+          closeModal()
       },
-      onError: (error) => {
+      onError: () => {
         toast.error('Erreur lors de la validation')
       }
     })

@@ -8,8 +8,11 @@ import {useRef} from "react";
 
 import html2canvas from 'html2canvas'
 import {jsPDF} from 'jspdf'
+import {useUserStore} from "@/stores/useUserStore";
 
 export default function QrCodePage(){
+
+    const user = useUserStore(s => s.user)
 
     const printRef = useRef(null)
 
@@ -39,6 +42,11 @@ export default function QrCodePage(){
 
     }
 
+    const qrData = {
+        merchant_id : user?.user._id,
+        proced_payment: true
+    }
+
     return(
         <div className={'w-full'}>
             <h1>QrCode</h1>
@@ -51,7 +59,7 @@ export default function QrCodePage(){
                 <div ref={printRef} className={'w-full max-w-[794px] h-screen max-h-[1096px] bg-custom_color-blue rounded-md flex flex-col justify-evenly items-center'}>
                     <Image src={'/assets/logo-white.svg'} alt={'logo'} width={250} height={128}/>
                     <div className={' p-4 bg-white rounded-md'}>
-                        <QRCodeCanvas value="https://reactjs.org/" size={400}/>
+                        <QRCodeCanvas value={JSON.stringify(qrData)} size={400}/>
                     </div>
 
                     <div className={'text-2xl text-white flex gap-4'}><Camera size={38}/> Scanner le QR Code <br/> pour payer</div>

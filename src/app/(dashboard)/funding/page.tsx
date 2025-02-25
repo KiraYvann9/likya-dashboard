@@ -18,13 +18,13 @@ export default function FundingPage(){
         queryFn: getAllCollects
     })
 
-
     return(
         <div>
             <h1>Founding</h1>
 
             <DataTable data={collects?.items || []} columns={columns} isLoading={isLoading}/>
             <FundraisingModal/>
-        </div>
+        </div> 
     )
+
 }
