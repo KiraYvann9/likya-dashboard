@@ -30,8 +30,9 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import Spinner from "@/components/spinner";
+import {Input} from "@/components/ui/input";
 
-export function DataTable({data, columns, isLoading}: {data: any, columns:any, isLoading: boolean}) {
+export function DataTable({data, columns, isLoading, filterBy, filterPlaceholder}: {data: any, columns:any, isLoading: boolean, filterBy:string, filterPlaceholder: string}) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
@@ -62,6 +63,15 @@ export function DataTable({data, columns, isLoading}: {data: any, columns:any, i
     return (
         <div className="w-full">
             <div className="flex items-center py-4">
+
+                <Input
+                    placeholder={filterPlaceholder}
+                    value={(table.getColumn(filterBy)?.getFilterValue() as string) ?? ""}
+                    onChange={(event) =>
+                        table.getColumn(filterBy)?.setFilterValue(event.target.value)
+                    }
+                    className="max-w-sm"
+                />
 
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

@@ -15,14 +15,23 @@ export default function FundingPage(){
 
     const {data: collects, isLoading} = useQuery({
         queryKey: ['collects'],
-        queryFn: getAllCollects
+        queryFn: getAllCollects,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+        staleTime: 1000 * 60 * 5
     })
 
     return(
         <div>
-            <h1>Founding</h1>
+            <h1>Collecte</h1>
 
-            <DataTable data={collects?.items || []} columns={columns} isLoading={isLoading}/>
+            <DataTable
+                filterBy={'title'}
+                filterPlaceholder={'Filtre par titre de la cagnotte'}
+                data={collects?.items || []}
+                columns={columns}
+                isLoading={isLoading}
+            />
             <FundraisingModal/>
         </div> 
     )

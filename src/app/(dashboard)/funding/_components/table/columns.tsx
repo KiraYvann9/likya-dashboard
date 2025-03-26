@@ -49,20 +49,24 @@ export const columns: ColumnDef<Schema>[] = [
         enableHiding: false,
     },
     {
-        accessorKey: "_id",
+        accessorKey: "created_at",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    ID
+                    Date
                     <ArrowUpDown/>
                 </Button>
             )
         },
         cell: ({ row }) => (
-            <div className="capitalize">{}</div>
+            <div className="capitalize">
+                {new Intl.DateTimeFormat("fr",{dateStyle: 'medium'} )
+                    .format(new Date(row.getValue('created_at')))
+                }
+            </div>
         ),
     },
     {
@@ -85,20 +89,22 @@ export const columns: ColumnDef<Schema>[] = [
         },
     },
     {
-        accessorKey: "created_by",
-        header: () => <div className="text-center">Créer par</div>,
+        accessorKey: "contributors",
+        header: () => <div className="text-center">Contributeurs</div>,
         cell: ({ row }) => {
-
-            return <div className="text-center font-medium">{row.getValue('created_by')}</div>
+            const contributors: Array<string> = row.getValue('contributors')
+            return <div className="text-center font-medium">{contributors.length}</div>
         },
     },
     {
-        accessorKey: "created_at",
-        header: () => <div className="text-center">Date création</div>,
+        accessorKey: "owner_info",
+        header: () => <div className="text-center">Créer par</div>,
         cell: ({ row }) => {
-            return <div className="text-center font-medium">{format(row.getValue('created_at'), 'dd/MM/yyyy')}</div>
+            const owner: { fullname: string } = row.getValue("owner_info")
+            return <div className="text-center font-medium">{owner.fullname}</div>
         },
     },
+
     {
         accessorKey: "status",
         header: ()=> <div className={'text-center'}>Status</div>,
@@ -114,7 +120,6 @@ export const columns: ColumnDef<Schema>[] = [
         enableHiding: false,
         cell: ({ row }) => {
             const payment = row.original
-            const openModal = useUserModal.getState().openModal
 
             const confirm = useFundraisingModalStore.getState().openModal
             return (
@@ -133,8 +138,7 @@ export const columns: ColumnDef<Schema>[] = [
                             Copy payment ID
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={()=>openModal('DETAIL', row.original)}>Détail</DropdownMenuItem>
-                        <DropdownMenuItem onClick={()=>openModal('EDIT',row.original)}>Modifier</DropdownMenuItem>
+                        <DropdownMenuItem onClick={()=>null}>Détail</DropdownMenuItem>
                         <DropdownMenuSeparator/>
                         <DropdownMenuItem onClick={()=>confirm("VALIDATE", {id:row.getValue('_id'), title: row.getValue('title')})}>Valider <div className={'w-2 h-2 rounded-full bg-green-400'}/> </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => confirm("REJECT", {id:row.getValue('_id'), title: row.getValue('title')})}

@@ -3,13 +3,12 @@ import {
     ChartPie,
     HandCoins,
     History,
-    Home,
     LucideIcon,
     QrCode,
     SquareActivity,
-    Ticket,
     UserRoundCog,
-    UsersRound
+    UsersRound,
+    Wallet
 } from 'lucide-react'
 
 export interface sidebarItemType {
@@ -29,6 +28,13 @@ export const SidebarItems: sidebarItemType[] = [
         permission: ['super-administrateur']
     },
     {
+        id:  5,
+        title: 'Wallet',
+        icon: Wallet,
+        link: "/invoices",
+        permission: ['prestataire']
+    },
+    {
         id:  2,
         title: 'Utilisateurs',
         icon: UsersRound,
@@ -39,7 +45,7 @@ export const SidebarItems: sidebarItemType[] = [
         id:  3,
         title: 'Historique',
         icon: History,
-        link: "/history",
+        link: "/transactions",
         permission: ['super-administrateur']
     },
     {
@@ -48,13 +54,6 @@ export const SidebarItems: sidebarItemType[] = [
         icon: UserRoundCog,
         link: "/settings",
         permission: ['super-administrateur']
-    },
-    {
-        id:  5,
-        title: 'Factures',
-        icon: Ticket,
-        link: "/invoices",
-        permission: ['prestataire']
     },
     {
         id:  6,

@@ -45,6 +45,8 @@ export default function SettingsPage(){
     const {data: users, isLoading, isError} = useQuery({
         queryKey: ['users'],
         queryFn: getUsers,
+        refetchOnWindowFocus: false,
+        staleTime: 1000 * 60 * 5
     })
 
     const createRole = async (data: z.infer<typeof roleSchema>) =>{
@@ -92,7 +94,12 @@ export default function SettingsPage(){
                     </div>
                     <h3>Liste des utilisateurs</h3>
 
-                    <DataTable columns={columns} data={users || []} isLoading={isLoading}/>
+                    <DataTable
+                        filterBy={"phonenumber"}
+                        filterPlaceholder={'Filtre par N° Téléphone'}
+                        columns={columns} data={users || []}
+                        isLoading={isLoading}
+                    />
                     <UserSheet/>
                 </TabsContent>
                 <TabsContent value="password" className="w-full p-4 space-y-8">

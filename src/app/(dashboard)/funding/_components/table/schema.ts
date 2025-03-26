@@ -1,15 +1,17 @@
 export type Schema = {
-    _id: string
-    created_at: string,
+    _id: string,
     target_amount: string,
+    //created_at: string,
     title: string,
     description:  string,
-    device: string,
     access: boolean,
     start_date: string,
     end_date: string,
-    created_by: string,
+    owner_info: {
+        fullname: string,
+    },
     collect_id: boolean,
     contributors: Array<string>,
     status: string,
+    created_at: string,
 }

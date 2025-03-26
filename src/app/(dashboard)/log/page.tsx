@@ -23,7 +23,7 @@ export default function LogPage(){
         <div>
             <h1>Log</h1>
 
-            <DataTable data={data || []} columns={columns} isLoading={isLoading}/>
+            <DataTable filterPlaceholder={'Rechercher par ID'} filterBy={'user_id'} data={data || []} columns={columns} isLoading={isLoading}/>
         </div>
     )
 }

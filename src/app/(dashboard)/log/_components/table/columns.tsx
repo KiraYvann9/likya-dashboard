@@ -59,7 +59,7 @@ export const columns: ColumnDef<Schema>[] = [
                 </Button>
             )
         },
-        cell: ({ row }) => (
+        cell: ({ }) => (
             <div className="capitalize">{}</div>
         ),
     },
