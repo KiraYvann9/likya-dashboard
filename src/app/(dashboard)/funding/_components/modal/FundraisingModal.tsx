@@ -22,8 +22,12 @@ import toast from "react-hot-toast"
     const {isOpen, closeModal, data, type} = useFundraisingModalStore()
 
     const validate = async(status: 'validate' | 'reject')=>{
-      const response = await updateData(`/collects/${data?.id}/validate?collect_status=${status}`,{})
-      return response.data
+      if(data){
+        const response = await updateData(`/collects/${data.id}/validate?collect_status=${status}`,{})
+        return response.data
+      }else{
+        return null
+      }
     }
 
 
