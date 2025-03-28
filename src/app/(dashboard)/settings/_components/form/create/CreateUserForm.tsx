@@ -53,7 +53,7 @@ export const CreateUserForm = () =>{
         return req.items
     }
 
-    const {data: roles, isLoading: roleIsLoading, isError} = useQuery({
+    const {data: roles, isLoading: roleIsLoading} = useQuery({
         queryKey: ['roles'],
         queryFn: getRoles,
     })
@@ -77,7 +77,7 @@ export const CreateUserForm = () =>{
         }
     })
 
-    const  onSubmit = async(data: any) => {
+    const  onSubmit = async(data: z.infer<typeof createUserFormSchema>) => {
         mutation.mutate(data)
     }
     return(
@@ -119,7 +119,7 @@ export const CreateUserForm = () =>{
                             </FormControl>
                             <SelectContent>
                                 {
-                                    roles && roles.map((role: any)=>{
+                                    roles && roles.map((role: { _id: string, name: string })=>{
                                         return(
                                             <SelectItem value={role?._id} key={role?._id}>{role?.name}</SelectItem>
                                         )

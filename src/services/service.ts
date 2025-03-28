@@ -3,8 +3,16 @@ import {useUserStore} from "@/stores/useUserStore";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL
 
+if(!baseUrl){
+    throw new Error("No base url provided");
+}
+
 export const fetchData = async(endpoint: string) =>{
     const {user} = useUserStore.getState();
+    if(!user?.access_token){
+        console.warn("🔴 Aucun token d'authentification trouvé.");
+        //throw new Error('User is not authenticated');
+    }
     try {
         const req = await axios.get(`${baseUrl}${endpoint}`, {
             headers: {
@@ -13,8 +21,15 @@ export const fetchData = async(endpoint: string) =>{
             }
         })
         return req.data
-    }catch(err){
-        throw err
+    }catch(err: any){
+
+        console.error("❌ Erreur lors du fetch :", err)
+
+        return{
+            success: false,
+            message: err.response?.data?.error?.message || "Une erreur est survenue"
+        }
+        //throw err
 
     }
 }

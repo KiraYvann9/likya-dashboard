@@ -1,13 +1,13 @@
 import {create} from 'zustand';
-import {persist, devtools} from 'zustand/middleware';
+import {persist} from 'zustand/middleware';
 import {toast} from "react-hot-toast";
 import axios from 'axios';
 
 interface user {
-    user: any,
+    user: any;
     login:(data: {phonenumber: string, password: string})=>any;
-    updateUser : (data: any)=>any;
-    logOut: ()=>any;
+    updateUser : (data: any)=> void;
+    logOut: ()=> Promise<void>;
 }
 
 export const baseUrl = process.env.NEXT_PUBLIC_API_URL
@@ -24,7 +24,7 @@ export const useUserStore = create<user>()(persist((set, get)=>({
 
             return response
 
-        }catch(err: any){
+        }catch(err: unknown){
             throw err
         }
     },
@@ -44,8 +44,11 @@ export const useUserStore = create<user>()(persist((set, get)=>({
             })
             set({user: null})
             return request.data
-        }catch(err: any){
-            toast.error(err?.message)
+        }catch(err: unknown){
+            if(err instanceof Error){
+                toast.error(err?.message)
+            }
+            console.error(err)
         }
     }
 

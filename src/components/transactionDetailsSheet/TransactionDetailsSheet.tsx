@@ -25,7 +25,7 @@ export function TransactionDetailsSheet() {
         return response
     }
 
-    const {data, isLoading, refetch} = useQuery({
+    const {data, refetch} = useQuery({
         queryKey: ['Transaction-details'],
         queryFn: getAllTransactions,
     })

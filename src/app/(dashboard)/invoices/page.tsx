@@ -126,7 +126,8 @@ export default function FacturePage(){
                                             <div className={'flex flex-col gap-1'}>
                                                 <span
                                                     className={'font-semibold text-xl text-custom_color-blue text-right'}>{item.amount} F CFA</span>
-                                                <span className={'text-sm text-gray-400'}>{new Intl.DateTimeFormat("fr", {
+                                                <span className={'text-sm text-gray-400'}>{
+                                                    new Intl.DateTimeFormat("fr", {
                                                     timeStyle: 'medium',
                                                     dateStyle: 'long'
                                                 }).format(new Date(item.timestamp))}</span>

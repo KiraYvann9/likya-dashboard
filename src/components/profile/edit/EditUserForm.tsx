@@ -66,13 +66,14 @@ export const EditUserForm = ({user}:{user: any}) =>{
             form.reset()
             closeModal()
         },
-        onError:(err: any) =>{
+        onError:(err: { status: number, message: string }) =>{
             console.log('User Error :', err);
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             err?.status === 403 ? toast.error('Vous n\'avez pas la permission pour effectuer cette action', {duration: 5000}) : toast.error(err?.message)
         }
     })
 
-    const  onSubmit = async(data: any) => {
+    const  onSubmit = async(data: z.infer<typeof editUserFormSchema>) => {
         console.log('data',data)
         mutation.mutate(data)
     }
@@ -101,7 +102,7 @@ export const EditUserForm = ({user}:{user: any}) =>{
                             </FormControl>
                             <SelectContent>
                                 {
-                                    roles && roles.map((role: any) => {
+                                    roles && roles.map((role: { _id: string, name: string }) => {
                                         return (
                                             <SelectItem value={role?._id} key={role?._id}>{role?.name}</SelectItem>
                                         )

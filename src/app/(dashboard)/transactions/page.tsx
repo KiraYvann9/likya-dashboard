@@ -1,10 +1,18 @@
-import {getAllTransactions} from "@/app/(dashboard)/transactions/_actions/actions";
+'use client'
 
-export default async function TransactionsPage() {
+import {fetchData} from "@/services/service";
 
-    const transactions = await getAllTransactions()
+export default function TransactionsPage() {
 
-    console.log('Transactions :',transactions)
+    //const transactions = await getAllTransactions()
+
+    const getAllTransactions = async () => {
+        const response = await fetchData('/transactions');
+        console.log('Transactions :',response)
+    }
+
+    getAllTransactions()
+
     return(
         <></>
     )

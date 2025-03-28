@@ -103,7 +103,7 @@ export const EditUserForm = () =>{
                             </FormControl>
                             <SelectContent>
                                 {
-                                    roles && roles.map((role: any) => {
+                                    roles && roles.map((role: { _id: string, name: string }) => {
                                         return (
                                             <SelectItem value={role?._id} key={role?._id}>{role?.name}</SelectItem>
                                         )

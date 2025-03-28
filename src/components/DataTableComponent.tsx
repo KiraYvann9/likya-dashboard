@@ -10,7 +10,7 @@ import {
     getFilteredRowModel,
     getPaginationRowModel,
     getSortedRowModel,
-    useReactTable,
+    useReactTable, ColumnDef,
 } from "@tanstack/react-table"
 import { ChevronDown } from "lucide-react"
 
@@ -32,7 +32,14 @@ import {
 import Spinner from "@/components/spinner";
 import {Input} from "@/components/ui/input";
 
-export function DataTable({data, columns, isLoading, filterBy, filterPlaceholder}: {data: any, columns:any, isLoading: boolean, filterBy:string, filterPlaceholder: string}) {
+interface DataTableProps<TData> {
+    data: TData[];
+    columns: ColumnDef<TData>[],
+    isLoading: boolean,
+    filterBy:string, 
+    filterPlaceholder: string
+}
+export function DataTable<TData>({data, columns, isLoading, filterBy, filterPlaceholder}: DataTableProps<TData>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []

@@ -12,7 +12,7 @@ export default function LogPage(){
         return response.items
     }
 
-    const {data, isLoading, isError} = useQuery({
+    const {data, isLoading } = useQuery({
         queryKey: ['logs'],
         queryFn: getLogs
     })

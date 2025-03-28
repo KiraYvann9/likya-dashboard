@@ -1,8 +1,8 @@
-import {CardFooter, Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {Label} from "@/components/ui/label";
-import {fetchData, postData} from "@/services/service";
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {fetchData} from "@/services/service";
+import { useQuery} from "@tanstack/react-query";
 import Spinner from "@/components/spinner";
 import {toast} from "react-hot-toast";
 import {usePermissionStore} from "@/stores/userPermissionStore";
@@ -15,6 +15,7 @@ const extractPermissionCodes = (tableau: Array<any>) =>{
 
 export const Roles = ({className}:{className: string}) =>{
     const checkRole = usePermissionStore(s => s.checkRole)
+
     const getRoles = async()=>{
         const req = await fetchData('/roles')
         return req.items
@@ -26,7 +27,8 @@ export const Roles = ({className}:{className: string}) =>{
     })
 
 
-    { isError && toast.error('Erreur lors de la connexion au serveur')}
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    isError && toast.error('Erreur lors de la connexion au serveur')
     return(
         <Card className={className}>
             <CardHeader>

@@ -51,10 +51,12 @@ export const LoginForm = () => {
             user?.user?.role?.slug !== 'super-administrateur'?router.push('/users') : router.push('/settings')
 
         },
-        onError(error: any){
+        onError(error: { response:{data: {message_error: string}} }){
 
             console.log('Error :', error)
-            toast.error(error.response.data.message_error)
+
+            toast.error(error?.response?.data.message_error)
+
         }
     })
 
