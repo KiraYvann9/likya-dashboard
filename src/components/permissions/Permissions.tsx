@@ -32,6 +32,7 @@ export const Permissions = ({className}:{className: string}) =>{
         queryFn: getPermissions,
     })
 
+    
     {isPermissionsError && toast.error('Erreur lors du chargement des permissions')}
 
     const givePermissions = async (data: Array<string>)=>{
@@ -52,6 +53,7 @@ export const Permissions = ({className}:{className: string}) =>{
         mutation.mutate(checkedRolePermissions)
     }
 
+    
     {mutation.error && toast.error('Veuillez choisir un rôle')}
 
     return(
@@ -69,7 +71,7 @@ export const Permissions = ({className}:{className: string}) =>{
 
                 {
                     isPermissionsLoading ? <Spinner/> :
-
+                        
                         permissions && permissions.map((permission: any, index:number)=>{
 
                             return(
@@ -79,6 +81,7 @@ export const Permissions = ({className}:{className: string}) =>{
                                         <AccordionContent className={'space-y-2 p-4'}>
 
                                             {
+                                                
                                                 permission?.permissions?.map((item: any, index: number)=>{
                                                     return(
                                                         <div className="flex items-center space-x-2" key={index}>

@@ -76,8 +76,12 @@ export const CreateUserForm = () =>{
             toast(err?.message)
         }
     })
+<<<<<<< HEAD
 
     const  onSubmit = async(data: z.infer<typeof createUserFormSchema>) => {
+=======
+    const  onSubmit = async(data: any) => {
+>>>>>>> b09cc46 (Fix: mise à jour du fichier '.eslint.config' pour fix les erreur 'any')
         mutation.mutate(data)
     }
     return(
