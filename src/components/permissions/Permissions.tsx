@@ -17,7 +17,6 @@ import {usePermissionStore} from "@/stores/userPermissionStore";
 import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
 import {useState} from "react";
-
 export const Permissions = ({className}:{className: string}) =>{
 
     const [isPermissionChecked, setIsPermissionChecked] = useState<boolean>(false)
@@ -33,7 +32,6 @@ export const Permissions = ({className}:{className: string}) =>{
         queryFn: getPermissions,
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     {isPermissionsError && toast.error('Erreur lors du chargement des permissions')}
 
     const givePermissions = async (data: Array<string>)=>{
@@ -54,7 +52,6 @@ export const Permissions = ({className}:{className: string}) =>{
         mutation.mutate(checkedRolePermissions)
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     {mutation.error && toast.error('Veuillez choisir un rôle')}
 
     return(
@@ -88,7 +85,6 @@ export const Permissions = ({className}:{className: string}) =>{
                                                             <Switch id="airplane-mode" checked={checkedRolePermissions.includes(item?.code)}
                                                              onCheckedChange={()=> {
                                                                  setIsPermissionChecked(true)
-                                                                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                                                                  !checkedRolePermissions.includes(item?.code) ? addPermission(item?.code):
                                                                      deletePermission(item?.code)
 

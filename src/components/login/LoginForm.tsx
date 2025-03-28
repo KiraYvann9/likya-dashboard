@@ -47,7 +47,6 @@ export const LoginForm = () => {
         onSuccess: ()=>{
             toast.success('Bienvenue !')
             form.reset()
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             user?.user?.role?.slug !== 'super-administrateur'?router.push('/users') : router.push('/settings')
 
         },

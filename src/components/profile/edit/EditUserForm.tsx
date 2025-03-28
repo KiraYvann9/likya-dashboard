@@ -1,5 +1,4 @@
 'use client'
-
 import {toast} from "react-hot-toast";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {fetchData, updateData} from "@/services/service";
@@ -68,7 +67,6 @@ export const EditUserForm = ({user}:{user: any}) =>{
         },
         onError:(err: { status: number, message: string }) =>{
             console.log('User Error :', err);
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             err?.status === 403 ? toast.error('Vous n\'avez pas la permission pour effectuer cette action', {duration: 5000}) : toast.error(err?.message)
         }
     })

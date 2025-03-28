@@ -1,5 +1,5 @@
-import {create} from 'zustand';
 
+import {create} from 'zustand';
 interface ModalType {
     isOpen : boolean,
     modalData: any,

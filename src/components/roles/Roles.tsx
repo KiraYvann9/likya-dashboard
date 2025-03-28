@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {Label} from "@/components/ui/label";
@@ -27,7 +28,6 @@ export const Roles = ({className}:{className: string}) =>{
     })
 
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     isError && toast.error('Erreur lors de la connexion au serveur')
     return(
         <Card className={className}>
