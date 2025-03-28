@@ -44,7 +44,8 @@ import toast from "react-hot-toast"
     const mutation = useMutation({
       mutationFn: handleConfirm,
       onSuccess: () => {
-          toast.success('La cagnote a été validée')
+        if(type==='VALIDATE') toast.success('La cagnote a été validée', {duration: 3000})
+        if(type==='REJECT') toast.success('La cagnote a été rejété', {duration: 3000})
           queryClient.invalidateQueries({queryKey: ['collects']})
           closeModal()
       },

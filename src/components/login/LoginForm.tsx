@@ -47,7 +47,7 @@ export const LoginForm = () => {
         onSuccess: ()=>{
             toast.success('Bienvenue !')
             form.reset()
-            user?.user?.role?.slug !== 'super-administrateur'?router.push('/users') : router.push('/settings')
+            user?.user?.role?.slug !== 'super-administrateur'?router.push('/invoices') : router.push('/settings')
 
         },
         onError(error: { response:{data: {message_error: string}} }){

@@ -34,13 +34,13 @@ export const SidebarItems: sidebarItemType[] = [
         link: "/invoices",
         permission: ['prestataire']
     },
-    {
-        id:  2,
-        title: 'Utilisateurs',
-        icon: UsersRound,
-        link: "/users",
-        permission: ['prestataire']
-    },
+    // {
+    //     id:  2,
+    //     title: 'Utilisateurs',
+    //     icon: UsersRound,
+    //     link: "/users",
+    //     permission: ['prestataire']
+    // },
     {
         id:  3,
         title: 'Historique',
