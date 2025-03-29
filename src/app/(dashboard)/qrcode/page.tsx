@@ -43,7 +43,7 @@ export default function QrCodePage(){
     }
 
     const qrData = {
-        merchant_id : user._id,
+        merchant_id : user?._id,
         proced_payment: true
     }
 
