@@ -16,6 +16,7 @@ import {
     User,
     ChevronDown
 } from "lucide-react"
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -34,14 +35,15 @@ import {
 } from "@/components/ui/avatar"
 import {ProfileComponent} from "@/components";
 import {useProfileSheet} from "@/stores/useProfileSheet";
+import { logout } from '../../services/auth_actions';
 
 export const NavComponent = () =>{
     const openModal = useProfileSheet(s => s.openModal)
-    const {user, logOut} = useUserStore()
+    const {user} = useUserStore()
     const router = useRouter()
 
     const mutation = useMutation({
-        mutationFn: logOut,
+        mutationFn: logout,
         onSuccess: ()=>{
             router.push('/')
             toast.success('Vous êtes déconnecté')
@@ -51,7 +53,7 @@ export const NavComponent = () =>{
     return(
         <nav className={'nav'}>
             <div className={'flex items-center'}>
-                {user && user?.user?.fullname}
+                {user && user?.fullname}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <div className={'flex items-center'}>

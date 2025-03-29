@@ -19,6 +19,7 @@ import {toast} from "react-hot-toast";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import {Eye, EyeClosed} from "lucide-react";
+import { login } from '../../services/auth_actions';
 
 const schema = z.object({
     phonenumber: z.string(),
@@ -32,8 +33,7 @@ export const LoginForm = () => {
     const [showPWD, setShowPWD] = useState<boolean>(false)
     const router = useRouter()
 
-    const login = useUserStore(s => s.login)
-    const user = useUserStore(s => s.user)
+    const setUser = useUserStore(s => s.setUser)
     const form = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -43,11 +43,13 @@ export const LoginForm = () => {
     })
 
     const mutation = useMutation({
-        mutationFn: login,
-        onSuccess: ()=>{
-            toast.success('Bienvenue !')
+        mutationFn: (data: FormData) => login(data),
+        onSuccess: (response: any)=>{
+
+            toast.success(response?.message)
             form.reset()
-            user?.user?.role?.slug !== 'super-administrateur'?router.push('/invoices') : router.push('/settings')
+            setUser(response.user)
+            response?.user?.role?.slug !== 'super-administrateur'?router.push('/invoices') : router.push('/settings')
 
         },
         onError(error: { response:{data: {message_error: string}} }){
@@ -60,7 +62,12 @@ export const LoginForm = () => {
     })
 
     const submit =(data: z.infer<typeof schema>) =>{
-        mutation.mutate(data)
+
+        const formData = new FormData()
+        formData.append('phonenumber', data.phonenumber)
+        formData.append('password', data.password)
+        
+        mutation.mutate(formData)
     }
 
   return (

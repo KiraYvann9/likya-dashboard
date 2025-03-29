@@ -33,27 +33,27 @@ export const ProfileComponent = () =>{
                         <div className={'flex flex-col gap-4'}>
                             <div className={'flex flex-col'}>
                                 <Label>Nom et prénoms</Label>
-                                <span className={'text-xl font-semibold'}>{user?.user?.fullname|| 'Non définit'}</span>
+                                <span className={'text-xl font-semibold'}>{user?.fullname|| 'Non définit'}</span>
                             </div>
                             <div className={'flex flex-col'}>
                                 <Label>E-mail</Label>
-                                <span className={'text-xl font-semibold'}>{user?.user?.email || 'Non définit'}</span>
+                                <span className={'text-xl font-semibold'}>{user?.email || 'Non définit'}</span>
                             </div>
                             <div className={'flex flex-col'}>
                                 <Label>N° Téléphone</Label>
-                                <span className={'text-xl font-semibold'}>{user?.user?.phonenumber || 'Non définit'}</span>
+                                <span className={'text-xl font-semibold'}>{user?.phonenumber || 'Non définit'}</span>
                             </div>
                             <div className={'flex flex-col'}>
                                 <Label>Adresse</Label>
-                                <span className={'text-xl font-semibold'}>{user?.user?.attributes?.address || 'Non définit'}</span>
+                                <span className={'text-xl font-semibold'}>{user?.attributes?.address || 'Non définit'}</span>
                             </div>
                             <div className={'flex flex-col'}>
                                 <Label>N° Compte bancaire</Label>
-                                <span className={'text-xl font-semibold'}>{user?.user?.attributes?.compte_bancaire || 'Non définit'}</span>
+                                <span className={'text-xl font-semibold'}>{user?.attributes?.compte_bancaire || 'Non définit'}</span>
                             </div>
                         </div>
                         :
-                    <EditUserForm user={user?.user}/>
+                    <EditUserForm user={user}/>
                 }
 
                 { !isOnEdit &&

@@ -1,17 +1,17 @@
-'use client'
 
 import {fetchData} from "@/services/service";
+import { getAllTransactions } from "./_actions/actions";
 
-export default function TransactionsPage() {
+export default async function TransactionsPage() {
 
-    //const transactions = await getAllTransactions()
+    const transactions = await getAllTransactions()
 
-    const getAllTransactions = async () => {
-        const response = await fetchData('/transactions');
-        console.log('Transactions :',response)
-    }
+    // const getAllTransactions = async () => {
+    //     const response = await fetchData('/transactions');
+    //     console.log('Transactions :',response)
+    // }
 
-    getAllTransactions()
+    console.log('TRANSACTION', transactions)
 
     return(
         <></>

@@ -33,7 +33,7 @@ interface TransactionOwnerType {
 export default function FacturePage(){
 
     const user = useUserStore(state => state.user);
-    console.log('user',user)
+    console.log('user in transaction : ', user)
 
     const getWallet = async () =>{
         const response = await fetchData(`/wallets`);
@@ -41,7 +41,7 @@ export default function FacturePage(){
     }
 
     const getAllTransactions = async () =>{
-        const response = await fetchData(`/transactions?transaction_receiver=${user?.user?._id}`);
+        const response = await fetchData(`/transactions?transaction_receiver=${user._id}`);
         return response.items;
     }
 
