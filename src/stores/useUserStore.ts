@@ -5,7 +5,7 @@ import axios from 'axios';
 
 interface user {
     user: any;
-    setUser:(data: {phonenumber: string, password: string})=>any;
+    setUser:(data: Record<any, string>)=>any;
     updateUser : (data: any)=> void;
     clearUser: ()=> void;
 }

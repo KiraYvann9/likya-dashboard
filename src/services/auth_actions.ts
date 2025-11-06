@@ -5,18 +5,24 @@ import axios from "axios";
 
 import { getCookies } from "@/services/cookies";
 
-const baseUrl = process.env.API_URL;
+const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export const login = async (data: FormData) => {
-  const phonenumber = data.get("phonenumber");
-  const password = data.get("password");
+
+type credentials = {
+  username: string | null;
+  password: string | null;
+};
+
+export const login = async (data: credentials) => {
+  
+  console.log("API URL:", baseUrl);
 
   try {
 
-    const res = await axios.post(`${baseUrl}/login`, { phonenumber, password });
+    const res = await axios.post(`${baseUrl}/token`, data);
 
-    if (res.data?.access_token) {
-      (await cookies()).set("access_token", res.data.access_token, {
+    if (res.data?.token?.access_token) {
+      (await cookies()).set("access_token", res.data.token.access_token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
@@ -31,8 +37,8 @@ export const login = async (data: FormData) => {
       };
     }
 
-    if (res.data?.refresh_token) {
-      (await cookies()).set("refresh_token", res.data.refresh_token, {
+    if (res.data?.token?.refresh_token) {
+      (await cookies()).set("refresh_token", res.data.token.refresh_token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",

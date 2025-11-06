@@ -14,7 +14,9 @@ import {
     LogOutIcon,
     Settings,
     User,
-    ChevronDown
+    ChevronDown,
+    Bell,
+    LogOut
 } from "lucide-react"
 
 import {
@@ -36,6 +38,7 @@ import {
 import {ProfileComponent} from "@/components";
 import {useProfileSheet} from "@/stores/useProfileSheet";
 import { logout } from '../../services/auth_actions';
+import { Separator } from '../ui/separator';
 
 export const NavComponent = () =>{
     const openModal = useProfileSheet(s => s.openModal)
@@ -52,46 +55,23 @@ export const NavComponent = () =>{
 
     return(
         <nav className={'nav'}>
-            <div className={'flex items-center'}>
-                {user && user?.fullname}
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <div className={'flex items-center'}>
-                            <Button variant="ghost">
-                                <Avatar>
-                                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                                    <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                            </Button>
-                            <ChevronDown size={22} className={'text-muted-foreground'}/>
-                        </div>
+            <div className={'w-full flex items-center justify-between '}>
+                <span className='text-3xl font-semibold'>
+                    {user && user?.userinfo?.firstname || 'Utilisateur'}
+                </span>
 
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56">
-                        <DropdownMenuLabel>Mon compte</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuGroup>
-                            <DropdownMenuItem onClick={openModal}>
-                                <User />
-                                <span>Profile</span>
-                                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                            </DropdownMenuItem>
-
-                            <DropdownMenuItem>
-                                <Settings />
-                                <span>Settings</span>
-                                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                            </DropdownMenuItem>
-                        </DropdownMenuGroup>
-
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={()=>mutation.mutate()}>
-                            <LogOutIcon/>
-                            <span>Déconnexion</span>
-                            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div className='flex gap-2 bg-white rounded-2xl overflow-hidden bg-gradient-to-br from-white to-white/5 border border-white shadow-sm'>
+                    <Button variant={'ghost'} className='h-12 w-12'>
+                        <Bell size={36} className={'text-muted-foreground'}/>
+                    </Button>
+                    <Button variant={'ghost'} className='h-12 w-12'>
+                        <Settings size={22} className={'text-muted-foreground'}/>
+                    </Button>
+                    <Separator orientation='vertical'/>
+                    <Button variant={'ghost'} title='Déconnecter' className='h-12 w-12' onClick={()=>mutation.mutate()}>
+                        <LogOut size={22} className={'text-red-400'}/>
+                    </Button>
+                </div>
 
             </div>
 

@@ -16,7 +16,8 @@ export interface sidebarItemType {
     title: string;
     link: string;
     icon: LucideIcon,
-    permission?: string[]
+    permission?: string[],
+    
 }
 
 export const SidebarItems: sidebarItemType[] = [
@@ -25,7 +26,8 @@ export const SidebarItems: sidebarItemType[] = [
         title: 'Dashboard',
         icon: ChartPie,
         link: "/dashboard",
-        permission: ['super-administrateur']
+        permission: ['super-administrateur'],
+
     },
     {
         id:  5,
@@ -55,13 +57,13 @@ export const SidebarItems: sidebarItemType[] = [
         link: "/settings",
         permission: ['super-administrateur']
     },
-    {
-        id:  6,
-        title: 'QRCode',
-        icon: QrCode,
-        link: "/qrcode",
-        permission: ['prestataire']
-    },
+    // {
+    //     id:  6,
+    //     title: 'QRCode',
+    //     icon: QrCode,
+    //     link: "/qrcode",
+    //     permission: ['prestataire']
+    // },
     {
         id:  7,
         title: 'Collecte',

@@ -9,6 +9,7 @@ import {useRef} from "react";
 import html2canvas from 'html2canvas'
 import {jsPDF} from 'jspdf'
 import {useUserStore} from "@/stores/useUserStore";
+import { CardComponent } from "@/components/CardComponent";
 
 export default function QrCodePage(){
 
@@ -48,7 +49,7 @@ export default function QrCodePage(){
     }
 
     return(
-        <div className={'w-full'}>
+        <CardComponent className={'w-full'}>
             <div className={'flex flex-col items-center gap-8'}>
                 <div className="w-full flex justify-between">
                     <h1>QrCode</h1>
@@ -69,6 +70,6 @@ export default function QrCodePage(){
                 </div>
             </div>
 
-        </div>
+        </CardComponent>
     )
 }

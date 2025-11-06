@@ -1,8 +1,9 @@
 import React from "react";
-import './wrapper.css'
+import './wrapper.css';
+
 export const MaxWidthWrapper = ({children}:{children: React.ReactNode}) =>{
     return(
-        <div className={'w-full min-h-full border p-4 rounded-md bg-white'}>
+        <div className={'w-full rounded-2xl'}>
             {children}
         </div>
     )
