@@ -1,7 +1,6 @@
 'use client'
 import {toast} from "react-hot-toast";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {fetchData, updateData} from "@/services/service";
 import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -21,6 +20,7 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {Check} from "lucide-react";
 import Spinner from "@/components/spinner";
+import api from "@/services/axiosConfig";
 
 
 export const EditUserForm = ({user}:{user: any}) =>{
@@ -42,8 +42,8 @@ export const EditUserForm = ({user}:{user: any}) =>{
     const queryClient = useQueryClient()
 
     const getRoles = async()=>{
-        const req = await fetchData('/roles')
-        return req.items
+        const req = await api.get('/roles')
+        return req.data
     }
 
     const {data: roles, isLoading: roleIsLoding} = useQuery({
@@ -52,7 +52,7 @@ export const EditUserForm = ({user}:{user: any}) =>{
     })
 
     const updateUser = async (data: z.infer<typeof editUserFormSchema>) =>{
-        const req = await updateData(`/users/${user._id}`, data)
+        const req = await api.put(`/users/${user._id}`, data)
         return req.data
     }
 
@@ -60,19 +60,16 @@ export const EditUserForm = ({user}:{user: any}) =>{
         mutationFn: updateUser,
         onSuccess: (data) => {
             queryClient.invalidateQueries({queryKey: ['users']})
-            console.log('Update Data :', data)
             toast.success('Modifié avec succès !')
             form.reset()
             closeModal()
         },
         onError:(err: { status: number, message: string }) =>{
-            console.log('User Error :', err);
             err?.status === 403 ? toast.error('Vous n\'avez pas la permission pour effectuer cette action', {duration: 5000}) : toast.error(err?.message)
         }
     })
 
     const  onSubmit = async(data: z.infer<typeof editUserFormSchema>) => {
-        console.log('data',data)
         mutation.mutate(data)
     }
     return(

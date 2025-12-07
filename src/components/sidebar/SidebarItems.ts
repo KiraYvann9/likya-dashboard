@@ -3,6 +3,7 @@ import {
     ChartPie,
     HandCoins,
     History,
+    Hospital,
     LucideIcon,
     QrCode,
     SquareActivity,
@@ -26,7 +27,7 @@ export const SidebarItems: sidebarItemType[] = [
         title: 'Dashboard',
         icon: ChartPie,
         link: "/dashboard",
-        permission: ['super-administrateur'],
+        permission: ['superuser','prestataire'],
 
     },
     {
@@ -34,49 +35,74 @@ export const SidebarItems: sidebarItemType[] = [
         title: 'Wallet',
         icon: Wallet,
         link: "/invoices",
+        permission: ["prestataire"]
+    },
+    {
+        id:  9,
+        title: 'Wallet',
+        icon: Wallet,
+        link: "/adminwallet",
+        permission: ["superuser"]
+    },
+    {
+        id:  2,
+        title: 'Utilisateurs',
+        icon: UsersRound,
+        link: "/users",
         permission: ['prestataire']
     },
     // {
-    //     id:  2,
-    //     title: 'Utilisateurs',
-    //     icon: UsersRound,
-    //     link: "/users",
-    //     permission: ['prestataire']
+    //     id:  3,
+    //     title: 'Historique',
+    //     icon: History,
+    //     link: "/transactions",
+    //     permission: ['superuser']
     // },
-    {
-        id:  3,
-        title: 'Historique',
-        icon: History,
-        link: "/transactions",
-        permission: ['super-administrateur']
-    },
     {
         id:  4,
         title: 'Paramètres',
         icon: UserRoundCog,
         link: "/settings",
-        permission: ['super-administrateur']
+        permission: ['superuser']
     },
-    // {
-    //     id:  6,
-    //     title: 'QRCode',
-    //     icon: QrCode,
-    //     link: "/qrcode",
-    //     permission: ['prestataire']
-    // },
+    {
+        id:  6,
+        title: 'Etablissements',
+        icon: Hospital,
+        link: "/establishments",
+        permission: ['superuser']
+    },
     {
         id:  7,
         title: 'Collecte',
         icon: HandCoins,
         link: "/funding",
-        permission: ['super-administrateur']
+        permission: ['superuser']
     },
     {
         id:  8,
         title: 'Log',
         icon: SquareActivity,
         link: "/log",
-        permission: ['super-administrateur']
+        permission: ['superuser']
     },
 
 ]
+
+// Helper to get sidebar items based on the current user
+export const getSidebarItems = (user?: any) : sidebarItemType[] =>{
+    const isSuperUser = !!user?.is_superuser
+    const userRole = user?.roles[0]?.slug || user?.roles[0]?.name
+
+    return SidebarItems.filter(item => {
+        // if item has no permission field, show to everyone
+        if(!item.permission || item.permission.length === 0) return true
+        // if super user, allow everything
+        if(isSuperUser && item.permission.includes('superuser')) return true
+        // otherwise check if user's role is included
+        if(userRole && item.permission.includes(userRole)) return true
+        return false
+    })
+}
+
+export default SidebarItems

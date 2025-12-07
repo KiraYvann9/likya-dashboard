@@ -36,8 +36,8 @@ interface DataTableProps<TData> {
     data: TData[];
     columns: ColumnDef<TData>[],
     isLoading: boolean,
-    filterBy:string, 
-    filterPlaceholder: string
+    filterBy?:string, 
+    filterPlaceholder?: string
 }
 export function DataTable<TData>({data, columns, isLoading, filterBy, filterPlaceholder}: DataTableProps<TData>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
@@ -71,14 +71,14 @@ export function DataTable<TData>({data, columns, isLoading, filterBy, filterPlac
         <div className="w-full">
             <div className="flex items-center py-4">
 
-                <Input
+                {/* <Input
                     placeholder={filterPlaceholder}
-                    value={(table.getColumn(filterBy)?.getFilterValue() as string) ?? ""}
+                    value={(table.getColumn(filterBy ||'')?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table.getColumn(filterBy)?.setFilterValue(event.target.value)
+                        table.getColumn(filterBy ||'')?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
-                />
+                /> */}
 
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

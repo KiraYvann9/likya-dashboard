@@ -17,8 +17,6 @@ import {EditUserForm} from "@/components/profile/edit/EditUserForm";
 export const ProfileComponent = () =>{
     const {isOpen, closeModal, isOnEdit, setEditMode} = useProfileSheet()
     const {user} = useUserStore()
-
-    console.log('Connected user :', user)
     return(
         <Sheet open={isOpen} onOpenChange={closeModal}>
             <SheetContent className={'flex flex-col gap-20'}>

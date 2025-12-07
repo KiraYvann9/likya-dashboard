@@ -1,6 +1,6 @@
 'use client'
 
-import React, {use, useState} from 'react'
+import React, { useState} from 'react'
 import {useRouter} from 'next/navigation'
 import Image from "next/image";
 import dynamic from 'next/dynamic';
@@ -14,55 +14,84 @@ import { useForm } from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod'
 import { Button } from '../ui/button';
 import {useUserStore} from "@/stores/useUserStore";
-import {useMutation} from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import {toast} from "react-hot-toast";
+
+import { signInWithEmailAndPassword} from "firebase/auth";
+import { auth } from '@/lib/config/firebase';
 
 import 'react-phone-number-input/style.css'
 // import PhoneInput from 'react-phone-number-input'
 
 import {Eye, EyeClosed} from "lucide-react";
-import { login } from '../../services/auth_actions';
+import { getUserInfo } from '@/services/service';
+
 
 const PhoneInput = dynamic(() => import('react-phone-number-input'), { ssr: false });
 
 const schema = z.object({
-    username: z.string({message: 'ce champ est requis'}).min(3, {message: 'Le nom d\'utilisateur doit contenir au moins 3 caractères'}),
+    email: z.string({message: 'ce champ est requis'}).min(3, {message: 'Le nom d\'utilisateur doit contenir au moins 3 caractères'}),
     password: z.string().min(8),
 })
 
 
 export const LoginForm = () => {
 
-    const [loginWithUsername, setLoginWithUsername] = useState<boolean>(false)
+    const [loginWithUsername, setLoginWithUsername] = useState<boolean>(true)
 
     const [showPWD, setShowPWD] = useState<boolean>(false)
     const router = useRouter()
 
-    const setUser = useUserStore(s => s.setUser)
+    const {setUser, user} = useUserStore()
     const form = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
-            username: '',
+            email: '',
             password: '',
         }
     })
 
     const mutation = useMutation({
-        mutationFn: (data: z.infer<typeof schema>) => login(data),
-        onSuccess: (response: any)=>{
-
-            toast.success(response?.message)
-            form.reset()
-            setUser(response.user)
-            response?.user?.role?.slug !== 'super-administrateur'?router.push('/invoices') : router.push('/settings')
-
+        mutationFn: async (data: z.infer<typeof schema>) => {
+            return await signInWithEmailAndPassword(auth, data.email, data.password);
         },
-        onError(error: { response:{data: {message_error: string}} }){
+        onSuccess: async ({ user }) => {
+            try {
+                // 1. Récupérer les informations utilisateur via l'API
+                // Le token Firebase est automatiquement ajouté par l'interceptor Axios
+                const userInfo = await getUserInfo(user.uid);
+                
+                // 2. Mettre à jour le store utilisateur
+                setUser(userInfo.data);
+                
+                // 3. Afficher le message de succès
+                toast.success("Connecté avec succès !");
+                
+                // 4. Réinitialiser le formulaire
+                form.reset();
+                
+                // 5. Redirection basée sur le rôle
+                const userRole = userInfo.data?.is_superuser;
+                if ( userRole ) {
+                    router.push('/adminwallet');
+                } else {
+                    router.push('/invoices');
+                }
+            } catch (error: any) {
+                console.error('Error during login process:', error);
+                toast.error(error?.response?.data?.message || 'Erreur lors de la récupération des informations utilisateur');
+            }
+        },
 
-            console.log('Error :', error)
 
-            toast.error(error?.response?.data.message_error)
-
+        onError(error: any) {
+            const errorMessage = error?.code === 'auth/user-not-found' 
+                ? 'Utilisateur non trouvé' 
+                : error?.code === 'auth/wrong-password'
+                ? 'Mot de passe incorrect'
+                : error?.message || 'Erreur de connexion';
+            
+            toast.error(errorMessage);
         }
     })
 
@@ -74,6 +103,15 @@ export const LoginForm = () => {
         
         mutation.mutate(data)
     }
+
+
+
+    // const {data} = useQuery({
+    //     queryKey: ['user-info'],
+    //     queryFn: async(userId: string) => {
+    //         return await getUserInfo(userId)
+    //     }
+    // });
 
   return (
     <div className='auth-container w-[450px]'>
@@ -96,7 +134,7 @@ export const LoginForm = () => {
                             </FormControl>
                         </FormItem>
                     )}
-                    name='username'
+                    name='email'
                     control={form.control}
                 />
                 :
@@ -112,7 +150,7 @@ export const LoginForm = () => {
                             </FormControl>
                         </FormItem>
                     )}
-                    name='username'
+                    name='email'
                     control={form.control}
                 />
             }
@@ -139,7 +177,7 @@ export const LoginForm = () => {
 
                 <Button 
                     type='submit' 
-                    className='btn flex items-center justify-center gap-2 bg-gradient-to-r from-[#5EB49D] to-[#18937F]'
+                    className='btn flex items-center justify-center gap-2 bg-custom_color-green hover:opacity-90 text-white'
                     disabled={mutation.isPending}
                 >
                     {mutation.isPending ? (
@@ -163,7 +201,7 @@ export const LoginForm = () => {
                 <Button 
                     type='button' 
                     variant='link' 
-                    className='p-0 text-sm text-blue-600 hover:text-blue-700 transition-colors duration-200' 
+                    className='p-0 text-sm text-custom_color-green hover:text-emerald-700 transition-colors duration-200' 
                     onClick={()=>{
                         form.reset()
                         setLoginWithUsername(!loginWithUsername)

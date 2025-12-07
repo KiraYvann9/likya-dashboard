@@ -12,17 +12,17 @@ import {
 } from "@/components/ui/sheet"
 
 import {useTransactionStore} from "@/stores/useTransactionStore";
-import {fetchData} from "@/services/service";
 import {useEffect} from "react";
 import {useQuery} from "@tanstack/react-query";
+import api from "@/services/axiosConfig";
 
 export function TransactionDetailsSheet() {
 
     const {isOpen, id, close} = useTransactionStore();
 
     const getAllTransactions = async () =>{
-        const response = await fetchData(`/transactions/${id}`);
-        return response
+        const response = await api.get(`/transactions/${id}`);
+        return response.data
     }
 
     const {data, refetch} = useQuery({

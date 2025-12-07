@@ -1,13 +1,13 @@
 'use client'
 
 import './nav.css'
-import {useUserStore} from "@/stores/useUserStore";
+import { useUserStore } from "@/stores/useUserStore";
 
 
-import {Button} from "@/components/ui/button";
-import {useMutation} from "@tanstack/react-query";
-import {useRouter} from "next/navigation";
-import {toast} from "react-hot-toast";
+import { Button } from "@/components/ui/button";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 
 import {
@@ -35,47 +35,71 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "@/components/ui/avatar"
-import {ProfileComponent} from "@/components";
-import {useProfileSheet} from "@/stores/useProfileSheet";
+import { ProfileComponent } from "@/components";
 import { logout } from '../../services/auth_actions';
 import { Separator } from '../ui/separator';
+import { getUserProfile } from '@/services/service';
+import { useEffect } from 'react';
 
-export const NavComponent = () =>{
-    const openModal = useProfileSheet(s => s.openModal)
-    const {user} = useUserStore()
+export const NavComponent = () => {
+    const clearCurrentUserData = useUserStore(s => s.clearUser)
+    const { user } = useUserStore()
     const router = useRouter()
 
     const mutation = useMutation({
         mutationFn: logout,
-        onSuccess: ()=>{
+        onSuccess: async () => {
             router.push('/')
+            clearCurrentUserData()
             toast.success('Vous êtes déconnecté')
+
         }
     })
 
-    return(
-        <nav className={'nav'}>
-            <div className={'w-full flex items-center justify-between '}>
-                <span className='text-3xl font-semibold'>
-                    {user && user?.userinfo?.firstname || 'Utilisateur'}
-                </span>
+    const { data: connectedUserProfileInfo } = useQuery({
+        queryKey: ['user-profile'],
+        queryFn: async () => {
+            const response = await getUserProfile()
+            return response.data
+        },
+        enabled: !!user?.id && user?.is_superuser === false,
+    });
 
-                <div className='flex gap-2 bg-white rounded-2xl overflow-hidden bg-gradient-to-br from-white to-white/5 border border-white shadow-sm'>
+    useEffect(() => {
+        if (connectedUserProfileInfo) {
+            useUserStore.getState().setProfile(connectedUserProfileInfo);
+        }
+    }, [connectedUserProfileInfo]);
+
+    return (
+        <nav className={'nav'}>
+            <div className={'w-full flex items-center justify-end '}>
+                
+
+                <div className='flex gap-2 bg-white rounded-2xl overflow-hidden h-12 bg-gradient-to-br from-white to-white/5 border border-white shadow-sm'>
+                    <span className='px-4 flex items-center font-medium'>
+                        {
+                            !user?.is_superuser && connectedUserProfileInfo ?  ` ${connectedUserProfileInfo.lastname || ''} ${connectedUserProfileInfo.firstname}` : 'Super Administrateur'
+                        }
+                    </span>
+
+                    <Separator orientation='vertical' className='border-gray-500 h-full'/>
+
                     <Button variant={'ghost'} className='h-12 w-12'>
-                        <Bell size={36} className={'text-muted-foreground'}/>
+                        <Bell size={36} className={'text-muted-foreground'} />
                     </Button>
                     <Button variant={'ghost'} className='h-12 w-12'>
-                        <Settings size={22} className={'text-muted-foreground'}/>
+                        <Settings size={22} className={'text-muted-foreground'} />
                     </Button>
-                    <Separator orientation='vertical'/>
-                    <Button variant={'ghost'} title='Déconnecter' className='h-12 w-12' onClick={()=>mutation.mutate()}>
-                        <LogOut size={22} className={'text-red-400'}/>
+                    <Separator orientation='vertical' />
+                    <Button variant={'ghost'} title='Déconnecter' className='h-12 w-12' onClick={() => mutation.mutate()}>
+                        <LogOut size={22} className={'text-red-400'} />
                     </Button>
                 </div>
 
             </div>
 
-            <ProfileComponent/>
+            <ProfileComponent />
         </nav>
     )
 }
