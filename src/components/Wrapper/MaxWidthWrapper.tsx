@@ -1,5 +1,5 @@
 import React from "react";
-import './wrapper.css';
+// import './wrapper.css';
 
 export const MaxWidthWrapper = ({children}:{children: React.ReactNode}) =>{
     return(

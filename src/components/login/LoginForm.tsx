@@ -4,7 +4,7 @@ import React, { useState} from 'react'
 import {useRouter} from 'next/navigation'
 import Image from "next/image";
 import dynamic from 'next/dynamic';
-import './login.css'
+// import './login.css'
 
 import {z} from "zod"
 
@@ -114,23 +114,26 @@ export const LoginForm = () => {
     // });
 
   return (
-    <div className='auth-container w-[450px]'>
+    <div className='bg-gradient-to-br from-white to-gray-50 shadow-lg 
+    rounded-2xl p-8 border border-gray-100
+    transition-all duration-300 hover:shadow-xl w-[450px]'>
         <div className="flex flex-col items-center">
             <Image src="/assets/logo2.svg" width={190} height={68} alt='logo' className="mb-2"/>
-            <p className="welcome-text">Bienvenue ! Connectez-vous à votre compte</p>
+            <p className="text-gray-600 text-sm text-center mt-2 mb-6">Bienvenue ! Connectez-vous à votre compte</p>
         </div>
 
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(submit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(submit)} className="space-y-6 w-full flex flex-col items-center justify-center gap-6">
 
                 {
                 loginWithUsername ? 
                 <FormField 
                     render={({field})=>(
-                        <FormItem className='form_group'>
-                            <FormLabel className='label'> Username <sup>*</sup> </FormLabel>
+                        <FormItem className='w-full space-y-1'>
+                            <FormLabel className='text-muted-foreground text-sm font-medium tracking-wide mb-1'> Username <sup>*</sup> </FormLabel>
                             <FormControl>
-                                <Input type={'text'} {...field} className='input pr-10' placeholder={''}/>
+                                <Input type={'text'} {...field} className='h-12 text-base border-2 rounded-lg bg-gray-50/50 px-4
+    hover:border-blue-400 focus:border-blue-600 focus:bg-white pr-10 transition-all duration-200' placeholder={''}/>
                             </FormControl>
                         </FormItem>
                     )}
@@ -140,13 +143,13 @@ export const LoginForm = () => {
                 :
                 <FormField 
                     render={({field})=>(
-                        <FormItem className='form_group'>
-                            <FormLabel className='label'> N° Téléphone <sup>*</sup></FormLabel>
+                        <FormItem className='w-full space-y-1'>
+                            <FormLabel className='text-muted-foreground text-sm font-medium tracking-wide mb-1'> N° Téléphone <sup>*</sup></FormLabel>
                             <FormControl>
                                 <PhoneInput
                                     autoComplete='none'
                                     placeholder="Enter phone number"
-                                    {...field} className={'input'} international defaultCountry={'CI'}/>
+                                    {...field} className={'h-12 text-base border-2 rounded-lg bg-gray-50/50 px-4 hover:border-blue-400 focus:border-blue-600 focus:bg-white'} international defaultCountry={'CI'}/>
                             </FormControl>
                         </FormItem>
                     )}
@@ -157,11 +160,12 @@ export const LoginForm = () => {
                 
                 <FormField 
                     render={({field})=>(
-                        <FormItem className='form_group'>
-                            <FormLabel className='label'> Mot de passe <sup>*</sup> </FormLabel>
+                        <FormItem className='w-full space-y-1'>
+                            <FormLabel className='text-muted-foreground text-sm font-medium tracking-wide mb-1'> Mot de passe <sup>*</sup> </FormLabel>
                             <FormControl>
                                 <div className={'w-full relative'}>
-                                    <Input type={showPWD?"text":"password"} {...field} className='input pr-10' placeholder={'*******'}/>
+                                    <Input type={showPWD?"text":"password"} {...field} className='h-12 text-base border-2 rounded-lg bg-gray-50/50 px-4
+    hover:border-blue-400 focus:border-blue-600 focus:bg-white pr-10 transition-all duration-200' placeholder={'*******'}/>
                                     {showPWD?
                                         <Eye className={'absolute top-4 right-2 text-muted-foreground cursor-pointer'} onClick={()=>setShowPWD(!showPWD)}/>
                                         :
@@ -177,7 +181,9 @@ export const LoginForm = () => {
 
                 <Button 
                     type='submit' 
-                    className='btn flex items-center justify-center gap-2 bg-custom_color-green hover:opacity-90 text-white'
+                    className='w-full h-12 text-white text-base font-semibold rounded-lg
+    transition-all duration-200 hover:opacity-90 active:scale-[0.98]
+    disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 bg-custom_color-green '
                     disabled={mutation.isPending}
                 >
                     {mutation.isPending ? (

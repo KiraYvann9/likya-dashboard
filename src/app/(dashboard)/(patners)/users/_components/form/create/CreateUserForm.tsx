@@ -13,7 +13,7 @@ import api from "@/services/axiosConfig";
 import { AxiosError } from "axios";
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
-import './form.css';
+// import './form.css';
 
 // Type pour l'utilisateur créé
 interface CreatedUser {
@@ -195,7 +195,7 @@ export const CreateUserForm = () => {
           <form onSubmit={createUserForm.handleSubmit(onSubmit)} className="space-y-4">
             <FormField 
               render={({ field }) => (
-                <FormItem className="input-group">
+                <FormItem className="w-full">
                   <FormLabel>E-mail <sup>*</sup></FormLabel>
                   <FormControl>
                     <Input 
@@ -215,7 +215,7 @@ export const CreateUserForm = () => {
 
             <FormField
               render={({ field }) => (
-                <FormItem className="input-group">
+                <FormItem className="w-full">
                   <FormLabel>Mot de passe <sup>*</sup></FormLabel>
                   <FormControl>
                     <div className="w-full relative">

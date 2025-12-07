@@ -13,7 +13,7 @@ import api from "@/services/axiosConfig";
 import { AxiosError } from "axios";
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
-import './form.css';
+// import './form.css';
 
 // Type pour l'utilisateur créé
 interface CreatedUser {

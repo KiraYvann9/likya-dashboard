@@ -19,7 +19,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-import './form.css'
+// import './form.css'
 
 import 'react-phone-number-input/style.css'
 import {Button} from "@/components/ui/button";
@@ -79,10 +79,10 @@ export const EditUserForm = () =>{
         <Form {...form}>
             <form action="" onSubmit={form.handleSubmit(onSubmit)}>
                 <FormField render={({field}) => (
-                    <FormItem className={'input-group'}>
+                    <FormItem className={'w-full'}>
                         <FormLabel>Username <sup>*</sup></FormLabel>
                         <FormControl>
-                            <Input {...field} type={'text'} className={'user_input'}
+                            <Input {...field} type={'text'} className={'h-10 border border-custom_color-green rounded-md'}
                                    />
                         </FormControl>
                         <FormMessage/>
@@ -90,11 +90,11 @@ export const EditUserForm = () =>{
                 )} name={'username'} control={form.control}/>
 
                 <FormField render={({field}) => (
-                    <FormItem className={'input-group'}>
+                    <FormItem className={'w-full'}>
                         <FormLabel>Rôle <sup>*</sup></FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value} >
                             <FormControl>
-                                <SelectTrigger className={'user_input'}>
+                                <SelectTrigger className={'h-10 border border-custom_color-green rounded-md'}>
                                     {roleIsLoding? <Spinner/> : <SelectValue placeholder="Sélectionnez un rôle"/>}
                                 </SelectTrigger>
                             </FormControl>
@@ -113,19 +113,19 @@ export const EditUserForm = () =>{
 
 
                 <FormField render={({field}) => (
-                    <FormItem className={'input-group'}>
+                    <FormItem className={'w-full'}>
                         <FormLabel>Adresse <sup>*</sup></FormLabel>
                         <FormControl>
-                            <Input {...field} type={'text'} className={'user_input'}/>
+                            <Input {...field} type={'text'} className={'h-10 border border-custom_color-green rounded-md'}/>
                         </FormControl>
                     </FormItem>
                 )} name={'attributes.address'} control={form.control}/>
                 <FormField
                     render={({field}) => (
-                        <FormItem className='input-group'>
+                        <FormItem className='w-full'>
                             <FormLabel> N° Compte Banquaire <sup>*</sup></FormLabel>
                             <FormControl>
-                                <Input {...field} type={'text'} className={'user_input'}/>
+                                <Input {...field} type={'text'} className={'h-10 border border-custom_color-green rounded-md'}/>
                             </FormControl>
                         </FormItem>
                     )}
