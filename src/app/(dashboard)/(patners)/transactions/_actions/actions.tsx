@@ -1,4 +1,4 @@
-"use server"
+
 
 import api from "@/services/axiosConfig";
 

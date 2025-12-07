@@ -1,11 +1,11 @@
 
 
 import { CardComponent } from "@/components/CardComponent";
-import { getAllTransactions } from "./_actions/actions";
+// import { getAllTransactions } from "./_actions/actions";
 
 export default async function TransactionsPage() {
 
-    const transactions = await getAllTransactions()
+    // const transactions = await getAllTransactions()
 
     // const getAllTransactions = async () => {
     //     const response = await fetchData('/transactions');
