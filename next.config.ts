@@ -15,6 +15,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
 const nextConfig: NextConfig = withPWA({
     /* config options here */
     reactStrictMode: false,
+    // turbo: {},
 });
 
 export default nextConfig;
