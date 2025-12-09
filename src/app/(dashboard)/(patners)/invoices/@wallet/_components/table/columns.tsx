@@ -8,13 +8,10 @@ import { ArrowUpDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { USerType } from "./TableSchema";
-import { SwitchComponent } from "@/components";
+import { TransactionColumnsSchema } from "./schema";
 import ActionsButton from "./ActionsButton"
-import { Badge } from "@/components/ui/badge"
-import { cn } from "@/lib/utils"
 
-export const columns: ColumnDef<USerType>[] = [
+export const columns: ColumnDef<TransactionColumnsSchema>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -37,38 +34,41 @@ export const columns: ColumnDef<USerType>[] = [
         enableSorting: false,
         enableHiding: false,
     },
-    {
-        accessorKey: "wallet_ref",
-        header: () => <div className={'text-left'}>Ref. Wallet</div>,
-        cell: ({ row }) => <div className="lowercase">{row.getValue("wallet_ref")}</div>,
-    },
     // {
-    //     accessorKey: "user_id",
-    //     header: "Utilisateur ID",
+    //     accessorKey: "_id",
+    //     header: ({ column }) => {
+    //         return (
+    //             <Button
+    //                 variant="ghost"
+    //                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+    //             >
+    //                 ID
+    //                 <ArrowUpDown />
+    //             </Button>
+    //         )
+    //     },
     //     cell: ({ row }) => (
-    //         <div className="capitalize">{row.getValue("user_id")}</div>
+    //         <div className="capitalize">{row.index + 1}</div>
     //     ),
     // },
     {
-        accessorKey: "balance",
-        header: "Montant",
+        accessorKey: "lastname",
+        header: "Nom",
         cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("balance")}</div>
+            <div className="capitalize">{row.getValue("lastname")}</div>
         ),
     },
     {
-        accessorKey: "currency",
-        header: () => <div className={'text-left'}>Devise</div>,
-        cell: ({ row }) => <div className="lowercase">{row.getValue("currency")}</div>,
+        accessorKey: "firstname",
+        header: "Prénom",
+        cell: ({ row }) => (
+            <div className="capitalize">{row.getValue("firstname")}</div>
+        ),
     },
     {
-        accessorKey: "state",
-        header: () => <div className={'text-left'}>Status</div>,
-        cell: ({ row }) => <div className="lowercase">
-            <Badge className={cn( row.getValue("state") === 'enable' ? 'bg-green-500' :'default', 'border-none' )}>
-                {row.getValue("status")}
-            </Badge>
-            </div>,
+        accessorKey: "contact.phonenumber_one",
+        header: () => <div className={'text-left'}>N° Téléphone</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("contact.phonenumber_one") || 'N/A'}</div>,
     },
     {
         accessorKey: "created_at",

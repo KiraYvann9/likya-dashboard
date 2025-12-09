@@ -10,7 +10,7 @@ export default function DashboardLayout({children}: {
             <SidebarComponent/>
             <div className={'w-full p-8 space-y-5'}>
                 <NavComponent/>
-                <div className={"w-full h-full"}>
+                <div className={"w-full h-auto"}>
                     <MaxWidthWrapper>
                         {children}
                     </MaxWidthWrapper>

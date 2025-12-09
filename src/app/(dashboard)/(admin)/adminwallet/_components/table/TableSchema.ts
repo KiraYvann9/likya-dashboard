@@ -4,7 +4,7 @@ export type USerType = {
     balance: string,
     currency: string,
     wallet_ref: string,
-    status: string,
+    state: 'enabled' | 'disabled' | 'locked',
     created_at: string,
     updated_at: string,
 }

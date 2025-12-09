@@ -80,7 +80,7 @@ export default function SettingsPage(){
     return(
         <CardComponent className={'settings'}>
             <div className={'mb-8'}>
-                <h1 className={'text-3xl font-bold text-gray-900'}>Paramètres</h1>
+                <h1 className={'text-2xl font-bold text-gray-900'}>Paramètres</h1>
             </div>
 
             <Tabs defaultValue="account" className="w-full">
@@ -101,7 +101,8 @@ export default function SettingsPage(){
                     </TabsTrigger>
                 </TabsList>
                 <TabsContent value="account" className="w-full p-6 mt-6">
-                    <div className={'settings_header mb-6'}>
+                    <div className={'flex justify-between mb-6'}>
+                        <h3 className={'text-xl font-semibold text-gray-800 mb-4'}>Liste des utilisateurs <strong className={'text-custom_color-green'}>[{profiles && profiles.total}]</strong></h3>
                         <div className={'btn_container flex gap-2'}>
                             <Button 
                                 className="bg-custom_color-green hover:opacity-90 transition-all duration-300 px-6 py-6 text-base font-semibold rounded-lg text-white" 
@@ -112,7 +113,6 @@ export default function SettingsPage(){
                             </Button>
                         </div>
                     </div>
-                    <h3 className={'text-xl font-semibold text-gray-800 mb-4'}>Liste des utilisateurs <strong className={'text-custom_color-green'}>[{profiles && profiles.total}]</strong></h3>
 
                     <DataTable
                         filterBy={"firstname"}

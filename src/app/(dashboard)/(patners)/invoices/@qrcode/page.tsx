@@ -44,7 +44,7 @@ export default function QrCodePage(){
     }
 
     const qrData = {
-        merchant_id : user?._id,
+        merchant_id : user?.id,
         proced_payment: true
     }
 
@@ -52,7 +52,7 @@ export default function QrCodePage(){
         <CardComponent className={'w-full'}>
             <div className={'flex flex-col items-center gap-8'}>
                 <div className="w-full flex justify-between">
-                    <h1>QrCode</h1>
+                    <h1 className={'text-2xl font-semibold'}>QrCode</h1>
                     
                     <div className={'w-full flex gap-2 justify-end'}>
                         <Button variant={'outline'} title={'Imprimer'} ><Printer/> Imprimer</Button>

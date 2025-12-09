@@ -55,7 +55,7 @@ export default function ActionsButton({ row }: { row: any }) {
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => openModal('DETAIL', row.original)}>Détail</DropdownMenuItem>
-                {/* <DropdownMenuItem onClick={() => openModal('EDIT', row.original)}>Modifier</DropdownMenuItem> */}
+                <DropdownMenuItem onClick={() => openModal('EDIT', row.original)}>Modifier</DropdownMenuItem>
 
                 <Separator />
                 
@@ -83,7 +83,7 @@ const DeleteUserDialog = ({ id }: { id: string }) => {
         <AlertDialog>
             <AlertDialogTrigger asChild disabled={deleteUserMutation.isPending}>
                 {deleteUserMutation.isPending ? <Spinner /> :
-                    <Button variant="ghost" className="text-red-500 p-2" >Supprimer</Button>
+                    <Button variant="ghost" className="text-red-500" >Supprimer</Button>
                 }
             </AlertDialogTrigger>
             <AlertDialogContent>

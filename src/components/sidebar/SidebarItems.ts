@@ -5,7 +5,7 @@ import {
     History,
     Hospital,
     LucideIcon,
-    QrCode,
+    QrCode, Settings,
     SquareActivity,
     UserRoundCog,
     UsersRound,
@@ -51,17 +51,17 @@ export const SidebarItems: sidebarItemType[] = [
         link: "/users",
         permission: ['prestataire']
     },
-    // {
-    //     id:  3,
-    //     title: 'Historique',
-    //     icon: History,
-    //     link: "/transactions",
-    //     permission: ['superuser']
-    // },
+    {
+        id:  3,
+        title: 'Transactions',
+        icon: History,
+        link: "/transactions",
+        permission: ['superuser', 'prestataire']
+    },
     {
         id:  4,
         title: 'Paramètres',
-        icon: UserRoundCog,
+        icon: Settings,
         link: "/settings",
         permission: ['superuser']
     },
@@ -92,15 +92,23 @@ export const SidebarItems: sidebarItemType[] = [
 // Helper to get sidebar items based on the current user
 export const getSidebarItems = (user?: any) : sidebarItemType[] =>{
     const isSuperUser = !!user?.is_superuser
-    const userRole = user?.roles[0]?.slug || user?.roles[0]?.name
+    const userRole = user?.roles?.[0]?.slug || user?.roles?.[0]?.name
 
     return SidebarItems.filter(item => {
         // if item has no permission field, show to everyone
         if(!item.permission || item.permission.length === 0) return true
-        // if super user, allow everything
-        if(isSuperUser && item.permission.includes('superuser')) return true
-        // otherwise check if user's role is included
+
+        // Admin: only items that include 'superuser'
+        if(isSuperUser) {
+            return item.permission.includes('superuser')
+        }
+
+        // Partner (non-superuser): show items intended for partners regardless of exact role name
+        if(!isSuperUser && item.permission.includes('prestataire')) return true
+
+        // Otherwise check if user's explicit role matches
         if(userRole && item.permission.includes(userRole)) return true
+
         return false
     })
 }

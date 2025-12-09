@@ -7,9 +7,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { CreateUserForm } from "../../form/create/CreateUserForm";
 import { useUserModal } from "@/stores/useModalStore";
-import { EditUserForm } from "../../form/edit/EditUserForm";
 import { Button } from "@/components/ui/button";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from 'react'
@@ -126,8 +124,6 @@ export function UserModal() {
 
                 {/* Contenu principal */}
                 <div className="px-6 py-6">
-                    {status === 'CREATE' && <CreateUserForm />}
-                    {status === 'EDIT' && <EditUserForm />}
 
                     {status === 'DETAIL' && (
                         <div className="space-y-5">

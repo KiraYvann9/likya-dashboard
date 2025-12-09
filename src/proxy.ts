@@ -1,0 +1,64 @@
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+// Define path groups for role-based protection
+const ADMIN_PATHS = [/^\/(adminwallet|settings|establishments|funding|log)(\/|$)/i];
+const PARTNER_PATHS = [/^\/(invoices|users|transactions)(\/|$)/i];
+
+function isMatch(pathname: string, patterns: RegExp[]) {
+  return patterns.some((re) => re.test(pathname));
+}
+
+export function proxy(req: NextRequest) {
+  const { nextUrl, cookies } = req;
+  const pathname = nextUrl.pathname;
+
+  // Public paths that never require auth
+  const PUBLIC_PATHS = ["/", "/favicon.ico"];
+  const isPublic = PUBLIC_PATHS.includes(pathname) || pathname.startsWith("/public");
+
+  // Read auth/role cookies set at login
+  const isSuperUserCookie = cookies.get("is_superuser")?.value; // "1" or "0"
+  const isAuthenticatedCookie = cookies.get("authenticated")?.value; // "1"
+
+  const isAuthenticated = isAuthenticatedCookie === "1" || typeof isSuperUserCookie !== "undefined";
+  const isSuperUser = isSuperUserCookie === "1";
+
+  // If visiting the auth page while authenticated, redirect to default dashboard
+  if (pathname === "/" && isAuthenticated) {
+    return NextResponse.redirect(new URL(isSuperUser ? "/adminwallet" : "/invoices", req.url));
+  }
+
+  // Always allow public paths
+  if (isPublic) return NextResponse.next();
+
+  // Only protect admin and partner namespaces
+  const isAdminSection = isMatch(pathname, ADMIN_PATHS);
+  const isPartnerSection = isMatch(pathname, PARTNER_PATHS);
+
+  if (isAdminSection || isPartnerSection) {
+    // Redirect unauthenticated users to login
+    if (!isAuthenticated) {
+      const loginUrl = new URL("/", req.url);
+      loginUrl.searchParams.set("redirected", "true");
+      loginUrl.searchParams.set("from", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    // Role-based protection
+    if (isAdminSection && !isSuperUser) {
+      return NextResponse.redirect(new URL("/invoices", req.url));
+    }
+
+    if (isPartnerSection && isSuperUser) {
+      return NextResponse.redirect(new URL("/adminwallet", req.url));
+    }
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  // Match all paths except those starting with _next or files with an extension, and API routes
+  matcher: ["/((?!_next|api|.*\\..*).*)"],
+};

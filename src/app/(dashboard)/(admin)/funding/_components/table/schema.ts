@@ -1,17 +1,17 @@
-export type Schema = {
-    _id: string,
-    target_amount: string,
-    //created_at: string,
-    title: string,
-    description:  string,
-    access: boolean,
-    start_date: string,
-    end_date: string,
-    owner_info: {
-        fullname: string,
-    },
-    collect_id: boolean,
-    contributors: Array<string>,
-    status: string,
-    created_at: string,
+export interface Campaign {
+    name: string;
+    description: string;
+    cover_uri: string;
+    category_ids: string[];
+    target_amount: number;
+    minimum_contribution_amount: number;
+    fixed_contribution_amount: number;
+    start_date: string;
+    end_date: string;
+    _id: string;
+    author_id: string;
+    slug: string;
+    created_at: string;
+    updated_at: string;
+    deleted: boolean;
 }
