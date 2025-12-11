@@ -140,7 +140,7 @@ export const CreateUserForm = () => {
     mutationKey: ['update-user-info'],
     mutationFn: updateUserInfo,
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: ['profiles'] });
       toast.success('Informations utilisateur mises à jour avec succès !');
       
       updateUserInfoForm.reset();

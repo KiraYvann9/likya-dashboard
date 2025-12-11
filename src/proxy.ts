@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 // Define path groups for role-based protection
-const ADMIN_PATHS = [/^\/(adminwallet|settings|establishments|funding|log)(\/|$)/i];
-const PARTNER_PATHS = [/^\/(invoices|users|transactions)(\/|$)/i];
+const ADMIN_PATHS = [/^\/(adminwallet|users|roles-permissions|establishments|funding|log)(\/|$)/i];
+const PARTNER_PATHS = [/^\/(invoices|transactions)(\/|$)/i];
 
 function isMatch(pathname: string, patterns: RegExp[]) {
   return patterns.some((re) => re.test(pathname));

@@ -5,7 +5,7 @@ import {
     History,
     Hospital,
     LucideIcon,
-    QrCode, Settings,
+    QrCode, Settings, Shield,
     SquareActivity,
     UserRoundCog,
     UsersRound,
@@ -18,7 +18,7 @@ export interface sidebarItemType {
     link: string;
     icon: LucideIcon,
     permission?: string[],
-    
+    subItems?: sidebarItemType[]
 }
 
 export const SidebarItems: sidebarItemType[] = [
@@ -42,14 +42,31 @@ export const SidebarItems: sidebarItemType[] = [
         title: 'Wallet',
         icon: Wallet,
         link: "/adminwallet",
-        permission: ["superuser"]
-    },
-    {
-        id:  2,
-        title: 'Utilisateurs',
-        icon: UsersRound,
-        link: "/users",
-        permission: ['prestataire']
+        permission: ["superuser"],
+        subItems: [
+            {
+                id: 10,
+                title: 'Registre',
+                icon: QrCode,
+                link: "/adminwallet/withdraw",
+                permission: ["superuser"]
+            },
+            {
+                id: 11,
+                title: 'Frais',
+                icon: UserRoundCog,
+                link: "/adminwallet/fees",
+                permission: ["superuser"]
+            },
+            {
+                id: 12,
+                title: 'limites',
+                icon: UserRoundCog,
+                link: "/adminwallet/limits",
+                permission: ["superuser"]
+            }
+
+        ]
     },
     {
         id:  3,
@@ -59,10 +76,17 @@ export const SidebarItems: sidebarItemType[] = [
         permission: ['superuser', 'prestataire']
     },
     {
+        id:  2,
+        title: 'Utilisateurs',
+        icon: UsersRound,
+        link: "/users",
+        permission: ['superuser']
+    },
+    {
         id:  4,
-        title: 'Paramètres',
-        icon: Settings,
-        link: "/settings",
+        title: 'Rôle & Permissions',
+        icon: Shield,
+        link: "/roles-permissions",
         permission: ['superuser']
     },
     {

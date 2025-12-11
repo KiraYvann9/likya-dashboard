@@ -23,6 +23,7 @@ export const SidebarComponent = () => {
                         return (
                             <li key={item.id}>
                                 <Link href={item.link} className={cn('text-custom_color-blue  w-full flex gap-4 items-center p-2 hover:bg-white rounded-xl hover:shadow-md transition-all duration-200', pathname === item.link && 'bg-gradient-to-r from-[#5EB49D] to-[#18937F] text-white rounded-xl dropshadow-xl')}><item.icon/> {item.title}</Link>
+
                             </li>
                         )
                     })}

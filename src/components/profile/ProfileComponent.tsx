@@ -11,17 +11,17 @@ import {
 } from "@/components/ui/sheet"
 import { useProfileSheet } from "@/stores/useProfileSheet";
 import { useUserStore } from "@/stores/useUserStore";
-import { EditUserForm } from "@/components/profile/edit/EditUserForm";
-import { Mail, Phone, MapPin, User, Edit3 } from "lucide-react";
+import { ProfileEditForm } from "@/components/profile/edit/ProfileEditForm";
+import { Mail, Phone, MapPin, User, Edit3, Calendar } from "lucide-react";
 
 export const ProfileComponent = () => {
     const { isOpen, closeModal, isOnEdit, setEditMode } = useProfileSheet()
     const { user, profile } = useUserStore()
-    
+
     return (
         <Sheet open={isOpen} onOpenChange={closeModal}>
             <SheetContent className="flex flex-col gap-0 p-0 sm:max-w-md">
-                {/* Header avec gradient */}
+                {/* Header avec gradient personnalisé */}
                 <div className="bg-gradient-to-br from-[#59AD96] to-[#1C8973] px-6 py-8 rounded-b-3xl shadow-lg">
                     <SheetHeader className="space-y-2">
                         <div className="flex items-center justify-between">
@@ -39,8 +39,8 @@ export const ProfileComponent = () => {
                                 </Button>
                             )}
                         </div>
-                        <SheetDescription className="text-blue-100">
-                            {isOnEdit 
+                        <SheetDescription className="text-white/90">
+                            {isOnEdit
                                 ? "Modifiez vos informations personnelles"
                                 : "Consultez et gérez vos informations"
                             }
@@ -51,7 +51,7 @@ export const ProfileComponent = () => {
                 {/* Contenu principal */}
                 <div className="flex-1 overflow-y-auto px-6 py-6">
                     {!isOnEdit ? (
-                        <div className="space-y-6">
+                        <div className="space-y-5">
                             {/* Nom complet */}
                             <div className="group">
                                 <div className="flex items-center gap-2 mb-2">
@@ -63,7 +63,7 @@ export const ProfileComponent = () => {
                                     </Label>
                                 </div>
                                 <p className="text-lg font-semibold text-gray-900 ml-12 -mt-1">
-                                    {profile?.lastname || profile?.firstname 
+                                    {profile?.lastname || profile?.firstname
                                         ? `${profile?.lastname || ''} ${profile?.firstname || ''}`.trim()
                                         : <span className="text-gray-400 italic font-normal">Non défini</span>
                                     }
@@ -91,25 +91,45 @@ export const ProfileComponent = () => {
 
                             <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
-                            {/* Téléphone */}
+                            {/* Téléphones */}
                             <div className="group">
                                 <div className="flex items-center gap-2 mb-2">
                                     <div className="p-2 bg-purple-50 rounded-lg group-hover:bg-purple-100 transition-colors">
                                         <Phone className="h-4 w-4 text-purple-600" />
                                     </div>
                                     <Label className="text-sm text-gray-500 font-medium">
-                                        Numéro de téléphone
+                                        Numéros de téléphone
                                     </Label>
                                 </div>
-                                <p className="text-lg font-semibold text-gray-900 ml-12 -mt-1">
-                                    {profile?.phonenumber || user?.phonenumber ? (
-                                        <span>{profile?.phonenumber || user?.phonenumber}</span>
-                                    ) : (
-                                        <span className="text-gray-400 italic font-normal">
+                                <div className="ml-12 -mt-1 space-y-1">
+                                    {profile?.contact?.phonenumber_one ? (
+                                        <div>
+                                            <span className="text-xs text-gray-400">Principal :</span>
+                                            <p className="text-lg font-semibold text-gray-900">
+                                                {profile.contact.phonenumber_one}
+                                            </p>
+                                        </div>
+                                    ) : user?.phonenumber ? (
+                                        <p className="text-lg font-semibold text-gray-900">
+                                            {user.phonenumber}
+                                        </p>
+                                    ) : null}
+
+                                    {profile?.contact?.phonenumber_two && (
+                                        <div>
+                                            <span className="text-xs text-gray-400">Secondaire :</span>
+                                            <p className="text-lg font-semibold text-gray-900">
+                                                {profile.contact.phonenumber_two}
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {!profile?.contact?.phonenumber_one && !profile?.contact?.phonenumber_two && !user?.phonenumber && (
+                                        <span className="text-gray-400 italic font-normal text-base">
                                             Aucun numéro ajouté
                                         </span>
                                     )}
-                                </p>
+                                </div>
                             </div>
 
                             <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
@@ -124,19 +144,63 @@ export const ProfileComponent = () => {
                                         Adresse
                                     </Label>
                                 </div>
-                                <p className="text-lg font-semibold text-gray-900 ml-12 -mt-1">
-                                    {profile?.addresse || user?.addresse ? (
-                                        <span>{profile?.addresse || user?.addresse}</span>
+                                <div className="ml-12 -mt-1">
+                                    {profile?.address?.street || profile?.address?.city || profile?.address?.region || profile?.address?.postal_code ? (
+                                        <div className="space-y-0.5">
+                                            {profile.address.street && (
+                                                <p className="text-lg font-semibold text-gray-900">
+                                                    {profile.address.street}
+                                                </p>
+                                            )}
+                                            <p className="text-base text-gray-700">
+                                                {[
+                                                    profile.address.city,
+                                                    profile.address.region,
+                                                    profile.address.postal_code
+                                                ].filter(Boolean).join(', ')}
+                                            </p>
+                                        </div>
+                                    ) : user?.addresse ? (
+                                        <p className="text-lg font-semibold text-gray-900">
+                                            {user.addresse}
+                                        </p>
                                     ) : (
-                                        <span className="text-gray-400 italic font-normal">
+                                        <span className="text-gray-400 italic font-normal text-base">
                                             Aucune adresse ajoutée
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
+                            {/* Date de naissance */}
+                            <div className="group">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <div className="p-2 bg-pink-50 rounded-lg group-hover:bg-pink-100 transition-colors">
+                                        <Calendar className="h-4 w-4 text-pink-600" />
+                                    </div>
+                                    <Label className="text-sm text-gray-500 font-medium">
+                                        Date de naissance
+                                    </Label>
+                                </div>
+                                <p className="text-lg font-semibold text-gray-900 ml-12 -mt-1">
+                                    {profile?.date_of_birth ? (
+                                        new Date(profile.date_of_birth).toLocaleDateString('fr-FR', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        })
+                                    ) : (
+                                        <span className="text-gray-400 italic font-normal text-base">
+                                            Non définie
                                         </span>
                                     )}
                                 </p>
                             </div>
                         </div>
                     ) : (
-                        <EditUserForm user={user} />
+                        <ProfileEditForm />
                     )}
                 </div>
 
@@ -145,18 +209,18 @@ export const ProfileComponent = () => {
                     <SheetFooter className="px-6 py-4 border-t bg-gray-50/50">
                         <div className="flex gap-3 w-full sm:w-auto">
                             <SheetClose asChild>
-                                <Button 
-                                    type="button" 
-                                    variant="outline" 
-                                    className="flex-1 sm:flex-none"
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="flex-1 sm:flex-none border-2 hover:bg-gray-100 rounded-lg h-10"
                                 >
                                     Fermer
                                 </Button>
                             </SheetClose>
-                            <Button 
-                                type="button" 
+                            <Button
+                                type="button"
                                 onClick={setEditMode}
-                                className="flex-1 sm:flex-none bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                                className="flex-1 sm:flex-none bg-gradient-to-r from-[#59AD96] to-[#1C8973] hover:from-[#4A9C85] hover:to-[#156A5A] text-white rounded-lg h-10 shadow-sm hover:shadow-md transition-all"
                             >
                                 <Edit3 className="mr-2 h-4 w-4" />
                                 Modifier
