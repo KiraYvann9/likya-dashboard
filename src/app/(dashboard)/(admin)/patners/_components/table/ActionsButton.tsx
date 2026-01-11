@@ -43,6 +43,18 @@ export default function ActionsButton({ row }: { row: any }) {
         return response.data;
     }
 
+    const sendCredentials = async () => {
+        const response = await api.post(`/admin/establishements/${row.original._id}/send-account-credentials`)
+        return response.data;
+    }
+
+    const mutation = useMutation({
+        mutationFn: sendCredentials,
+        onSuccess: async (data) => {
+            toast.success("Invitation envoyée avec success!")
+        }
+    })
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -54,12 +66,12 @@ export default function ActionsButton({ row }: { row: any }) {
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => openModal('DETAIL', row.original)}>Détail</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => mutation.mutate()}>Inviter</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => openModal('EDIT', row.original)}>Modifier</DropdownMenuItem>
 
                 <Separator />
                 
-                <DeleteUserDialog id={row.original?.user_id} />
+                <DeleteUserDialog id={row.original.id} />
             </DropdownMenuContent>
         </DropdownMenu>
     )
@@ -74,7 +86,7 @@ const DeleteUserDialog = ({ id }: { id: string }) => {
             await api.delete(`/users/${userID}`);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['users', 'profiles'] })
+            queryClient.invalidateQueries({ queryKey: ['users'] })
             toast.success('Utilisateur supprimé avec succès')
         }
     })
@@ -88,14 +100,15 @@ const DeleteUserDialog = ({ id }: { id: string }) => {
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Etes vous sûr ?</AlertDialogTitle>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        cette action est irreversible.
+                        This action cannot be undone. This will permanently delete your
+                        account and remove your data from our servers.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Annuler</AlertDialogCancel>
-                    <AlertDialogAction className={'bg-red-400'} onClick={() => deleteUserMutation.mutate(id)}>Continuer</AlertDialogAction>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => deleteUserMutation.mutate(id)}>Continue</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

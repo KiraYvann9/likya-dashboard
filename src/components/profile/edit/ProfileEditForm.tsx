@@ -51,12 +51,12 @@ export const ProfileEditForm = () => {
 
     const upsertProfileRequest = async (data: EditProfileFormValues) => {
         try {
-            // Try to update first
+
             return await updateProfileRequest(data)
         } catch (err: any) {
             const status = err?.response?.status
+
             if (status === 400) {
-                // If update is not allowed because the profile doesn't exist yet, create it
                 const created = await createProfileRequest(data)
                 return created
             }
@@ -166,7 +166,7 @@ export const ProfileEditForm = () => {
                     </div>
                 </div>
 
-                {/* Section Téléphones */}
+
                 <div className="space-y-4">
                     <div className="flex items-center gap-2 pb-2 border-b border-gray-200">
                         <div className="p-1.5 bg-purple-50 rounded-md">

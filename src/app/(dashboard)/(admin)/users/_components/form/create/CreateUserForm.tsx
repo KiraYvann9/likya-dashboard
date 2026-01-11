@@ -192,7 +192,7 @@ export const CreateUserForm = () => {
       {/* {createdUser === null ? ( */}
         
         <Form {...createUserForm}>
-          <form onSubmit={createUserForm.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={createUserForm.handleSubmit(onSubmit)} className="space-y-4" >
             <FormField 
               render={({ field }) => (
                 <FormItem className="w-full">
@@ -273,7 +273,7 @@ export const CreateUserForm = () => {
       {/* ) : ( */}
         
         <Form {...updateUserInfoForm}>
-          <form onSubmit={updateUserInfoForm.handleSubmit(onUpdateUserInfoSubmit)} className="space-y-4">
+          <form onSubmit={updateUserInfoForm.handleSubmit(onUpdateUserInfoSubmit)} className="space-y-4 mt-4">
             
             <FormField
               render={({ field }) => (
@@ -285,7 +285,7 @@ export const CreateUserForm = () => {
                       type="text" 
                       className="border h-14 text-2xl w-full"
                       placeholder="Nom"
-                      disabled={completeUserProfileMutation.isPending}
+                      disabled={completeUserProfileMutation.isPending || !createdUser}
                     />
                   </FormControl>
                   <FormMessage />
@@ -305,7 +305,7 @@ export const CreateUserForm = () => {
                       type="text" 
                       className="border h-14 text-2xl"
                       placeholder="Prénoms"
-                      disabled={completeUserProfileMutation.isPending}
+                      disabled={completeUserProfileMutation.isPending || !createdUser}
                     />
                   </FormControl>
                   <FormMessage />
@@ -341,14 +341,14 @@ export const CreateUserForm = () => {
                 onClick={handleBack} 
                 type="button" 
                 variant="outline" 
-                disabled={completeUserProfileMutation.isPending}
+                disabled={completeUserProfileMutation.isPending || !createdUser}
               >
                 Retour
               </Button>
               <Button 
                 type="submit" 
                 className="bg-green-500 hover:bg-green-600" 
-                disabled={completeUserProfileMutation.isPending}
+                disabled={completeUserProfileMutation.isPending || !createdUser}
               >
                 {completeUserProfileMutation.isPending ? (
                   <>Mise à jour...</>

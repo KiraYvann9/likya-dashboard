@@ -4,7 +4,6 @@ import React, {useState} from 'react'
 import {useRouter} from 'next/navigation'
 import Image from "next/image";
 import dynamic from 'next/dynamic';
-// import './login.css'
 
 import {z} from "zod"
 
@@ -17,11 +16,9 @@ import {useUserStore} from "@/stores/useUserStore";
 import {useMutation} from "@tanstack/react-query";
 import {toast} from "react-hot-toast";
 
-import {signInWithEmailAndPassword} from "firebase/auth";
-import {auth} from '@/lib/config/firebase';
+import { supabase } from '@/lib/config/supabase';
 
 import 'react-phone-number-input/style.css'
-// import PhoneInput from 'react-phone-number-input'
 
 import {Eye, EyeClosed} from "lucide-react";
 import {getUserInfo} from '@/services/service';
@@ -53,11 +50,16 @@ export const LoginForm = () => {
 
     const mutation = useMutation({
         mutationFn: async (data: z.infer<typeof schema>) => {
-            return await signInWithEmailAndPassword(auth, data.email, data.password);
+            const { data: signInData, error } = await supabase.auth.signInWithPassword({
+                email: data.email,
+                password: data.password,
+            });
+            if (error) throw error;
+            return signInData;
         },
-        onSuccess: async ({user}) => {
+        onSuccess: async ({ user }) => {
             try {
-                const userInfo = await getUserInfo(user.uid);
+                const userInfo = await getUserInfo(user.id);
 
                 setUser(userInfo.data);
 
@@ -88,12 +90,7 @@ export const LoginForm = () => {
 
 
         onError(error: any) {
-            const errorMessage = error?.code === 'auth/user-not-found'
-                ? 'Utilisateur non trouvé'
-                : error?.code === 'auth/wrong-password'
-                    ? 'Mot de passe incorrect'
-                    : error?.message || 'Erreur de connexion';
-
+            const errorMessage = error?.message || 'Erreur de connexion';
             toast.error(errorMessage);
         }
     })
@@ -101,14 +98,6 @@ export const LoginForm = () => {
     const submit = (data: z.infer<typeof schema>) => {
         mutation.mutate(data)
     }
-
-
-    // const {data} = useQuery({
-    //     queryKey: ['user-info'],
-    //     queryFn: async(userId: string) => {
-    //         return await getUserInfo(userId)
-    //     }
-    // });
 
     return (
 

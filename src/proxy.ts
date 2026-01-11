@@ -24,27 +24,26 @@ export function proxy(req: NextRequest) {
   const isAuthenticated = isAuthenticatedCookie === "1" || typeof isSuperUserCookie !== "undefined";
   const isSuperUser = isSuperUserCookie === "1";
 
-  // If visiting the auth page while authenticated, redirect to default dashboard
-  if (pathname === "/" && isAuthenticated) {
-    return NextResponse.redirect(new URL(isSuperUser ? "/adminwallet" : "/invoices", req.url));
+  // Require authentication for all pages except the auth entry ("/") and favicon
+  if (!isAuthenticated) {
+    if (pathname === "/" || pathname === "/favicon.ico") {
+      return NextResponse.next();
+    }
+    const loginUrl = new URL("/", req.url);
+    loginUrl.searchParams.set("redirected", "true");
+    loginUrl.searchParams.set("from", pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
-  // Always allow public paths
+  // From here, user is authenticated.
+  // Public paths are accessible to all authenticated users (is_superuser "1" or "0")
   if (isPublic) return NextResponse.next();
 
-  // Only protect admin and partner namespaces
+  // Only protect admin and partner namespaces with role checks
   const isAdminSection = isMatch(pathname, ADMIN_PATHS);
   const isPartnerSection = isMatch(pathname, PARTNER_PATHS);
 
   if (isAdminSection || isPartnerSection) {
-    // Redirect unauthenticated users to login
-    if (!isAuthenticated) {
-      const loginUrl = new URL("/", req.url);
-      loginUrl.searchParams.set("redirected", "true");
-      loginUrl.searchParams.set("from", pathname);
-      return NextResponse.redirect(loginUrl);
-    }
-
     // Role-based protection
     if (isAdminSection && !isSuperUser) {
       return NextResponse.redirect(new URL("/invoices", req.url));

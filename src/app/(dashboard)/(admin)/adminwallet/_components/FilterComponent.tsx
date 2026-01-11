@@ -137,7 +137,7 @@ export default function FilterComponent({
                 Créé après (gt)
               </label>
               <Input
-                type="datetime-local"
+                type="date"
                 value={created_gt}
                 onChange={(e) => setCreated_gt(e.target.value)}
               />
@@ -149,7 +149,7 @@ export default function FilterComponent({
                 Créé avant (lt)
               </label>
               <Input
-                type="datetime-local"
+                type="date"
                 value={created_lt}
                 onChange={(e) => setCreated_lt(e.target.value)}
               />
@@ -161,7 +161,7 @@ export default function FilterComponent({
                 Créé après ou égal (gte)
               </label>
               <Input
-                type="datetime-local"
+                type="date"
                 value={created_gte}
                 onChange={(e) => setCreated_gte(e.target.value)}
               />
@@ -173,7 +173,7 @@ export default function FilterComponent({
                 Créé avant ou égal (lte)
               </label>
               <Input
-                type="datetime-local"
+                type="date"
                 value={created_lte}
                 onChange={(e) => setCreated_lte(e.target.value)}
               />

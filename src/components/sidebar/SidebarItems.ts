@@ -73,7 +73,7 @@ export const SidebarItems: sidebarItemType[] = [
         title: 'Transactions',
         icon: History,
         link: "/transactions",
-        permission: ['superuser', 'prestataire']
+        permission: ['superuser']
     },
     {
         id:  2,
@@ -93,7 +93,7 @@ export const SidebarItems: sidebarItemType[] = [
         id:  6,
         title: 'Etablissements',
         icon: Hospital,
-        link: "/establishments",
+        link: "/patners",
         permission: ['superuser']
     },
     {
@@ -119,18 +119,15 @@ export const getSidebarItems = (user?: any) : sidebarItemType[] =>{
     const userRole = user?.roles?.[0]?.slug || user?.roles?.[0]?.name
 
     return SidebarItems.filter(item => {
-        // if item has no permission field, show to everyone
+
         if(!item.permission || item.permission.length === 0) return true
 
-        // Admin: only items that include 'superuser'
         if(isSuperUser) {
             return item.permission.includes('superuser')
         }
 
-        // Partner (non-superuser): show items intended for partners regardless of exact role name
         if(!isSuperUser && item.permission.includes('prestataire')) return true
 
-        // Otherwise check if user's explicit role matches
         if(userRole && item.permission.includes(userRole)) return true
 
         return false

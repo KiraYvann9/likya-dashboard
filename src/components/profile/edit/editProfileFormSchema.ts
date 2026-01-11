@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const editProfileFormSchema = z.object({
-  email: z.string().email({ message: 'Adresse e-mail invalide' }),
+  email: z.string().optional(),
   lastname: z.string().min(1, { message: 'Nom requis' }),
   firstname: z.string().min(1, { message: 'Prénom requis' }),
   contact: z.object({
