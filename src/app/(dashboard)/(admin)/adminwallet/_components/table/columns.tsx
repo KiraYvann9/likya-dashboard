@@ -66,7 +66,7 @@ export const columns: ColumnDef<USerType>[] = [
         header: () => <div className={'text-left'}>Status</div>,
         cell: ({ row }) => <div className="lowercase">
             <Badge className={cn( row.getValue("state") === 'enable' ? 'bg-green-500' :'default', 'border-none' )}>
-                {row.getValue("status")}
+                {row.getValue("state")}
             </Badge>
             </div>,
     },

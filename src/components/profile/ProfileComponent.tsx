@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import {
@@ -13,15 +15,24 @@ import { useProfileSheet } from "@/stores/useProfileSheet";
 import { useUserStore } from "@/stores/useUserStore";
 import { ProfileEditForm } from "@/components/profile/edit/ProfileEditForm";
 import { Mail, Phone, MapPin, User, Edit3, Calendar } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import {getUserProfile} from "@/services/service";
+import {EditProfileFormValues} from "@/components/profile/edit/editProfileFormSchema";
+
 
 export const ProfileComponent = () => {
     const { isOpen, closeModal, isOnEdit, setEditMode } = useProfileSheet()
     const { user, profile } = useUserStore()
 
+    const { data: profileInfo } = useQuery({
+        queryKey: ['profileInfo'],
+        queryFn: getUserProfile
+    })
+
     return (
         <Sheet open={isOpen} onOpenChange={closeModal}>
             <SheetContent className="flex flex-col gap-0 p-0 sm:max-w-md">
-                {/* Header avec gradient personnalisé */}
+
                 <div className="bg-gradient-to-br from-[#59AD96] to-[#1C8973] px-6 py-8 rounded-b-3xl shadow-lg">
                     <SheetHeader className="space-y-2">
                         <div className="flex items-center justify-between">
@@ -63,8 +74,8 @@ export const ProfileComponent = () => {
                                     </Label>
                                 </div>
                                 <p className="text-lg font-semibold text-gray-900 ml-12 -mt-1">
-                                    {profile?.lastname || profile?.firstname
-                                        ? `${profile?.lastname || ''} ${profile?.firstname || ''}`.trim()
+                                    {profileInfo?.data?.lastname || profileInfo?.data?.firstname
+                                        ? `${profileInfo?.data?.lastname || ''} ${profileInfo?.data?.firstname || ''}`.trim()
                                         : <span className="text-gray-400 italic font-normal">Non défini</span>
                                     }
                                 </p>
@@ -72,7 +83,6 @@ export const ProfileComponent = () => {
 
                             <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
-                            {/* Email */}
                             <div className="group">
                                 <div className="flex items-center gap-2 mb-2">
                                     <div className="p-2 bg-green-50 rounded-lg group-hover:bg-green-100 transition-colors">
@@ -83,7 +93,7 @@ export const ProfileComponent = () => {
                                     </Label>
                                 </div>
                                 <p className="text-lg font-semibold text-gray-900 ml-12 -mt-1 break-all">
-                                    {profile?.email || (
+                                    {profileInfo?.data?.email || (
                                         <span className="text-gray-400 italic font-normal">Non défini</span>
                                     )}
                                 </p>
@@ -91,7 +101,6 @@ export const ProfileComponent = () => {
 
                             <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
-                            {/* Téléphones */}
                             <div className="group">
                                 <div className="flex items-center gap-2 mb-2">
                                     <div className="p-2 bg-purple-50 rounded-lg group-hover:bg-purple-100 transition-colors">

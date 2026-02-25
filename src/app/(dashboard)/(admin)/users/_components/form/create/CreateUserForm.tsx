@@ -2,7 +2,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { createUserFormSchema, updateUserFormSchema, type CreateUserFormSchema, type UpdateUserFormSchema } from './createUserFormSchema';
-import { useState } from "react";
+import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { Input } from "@/components/ui/input";
@@ -188,178 +188,194 @@ export const CreateUserForm = () => {
   };
 
   return (
-    <>
+    <div className={'space-y-6'}>
       {/* {createdUser === null ? ( */}
-        
-        <Form {...createUserForm}>
-          <form onSubmit={createUserForm.handleSubmit(onSubmit)} className="space-y-4" >
-            <FormField 
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>E-mail <sup>*</sup></FormLabel>
-                  <FormControl>
-                    <Input 
-                      {...field} 
-                      type="email" 
-                      className="border h-14 text-2xl"
-                      placeholder="exemple@email.com"
-                      disabled={mutation.isPending}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} 
-              name="username" 
-              control={createUserForm.control} 
-            />
 
-            <FormField
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Mot de passe <sup>*</sup></FormLabel>
-                  <FormControl>
-                    <div className="w-full relative">
-                      <Input 
-                        type={showPWD ? "text" : "password"} 
-                        {...field} 
-                        className="border h-14 text-2xl pr-10"
-                        placeholder="*******"
-                        disabled={mutation.isPending}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPWD(!showPWD)}
-                        className="absolute top-1/2 -translate-y-1/2 right-3"
-                        tabIndex={-1}
-                      >
-                        {showPWD ? (
-                          <Eye size={18} className="text-muted-foreground cursor-pointer" />
-                        ) : (
-                          <EyeClosed size={18} className="text-muted-foreground cursor-pointer" />
-                        )}
-                      </button>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-              name="password"
-              control={createUserForm.control}
-            />
-
-            <div className="grid grid-cols-2 gap-2 mt-4 w-full">
-              <Button 
-                onClick={handleClose} 
-                type="button" 
-                variant="outline"
-                disabled={mutation.isPending}
-              >
-                Fermer
-              </Button>
-              <Button 
-                type="submit" 
-                className="bg-green-500 hover:bg-green-600" 
-                disabled={mutation.isPending}
-              >
-                {mutation.isPending ? (
-                  <>Création...</>
-                ) : (
-                  <><Plus className="mr-2" size={18} /> Créer</>
-                )}
-              </Button>
+        <div className="space-y-4">
+            <div className="flex items-center gap-2 pb-2">
+                <div className="w-1 h-6 bg-gradient-to-b from-indigo-600 to-indigo-400 rounded-full"></div>
+                <h3 className="text-lg font-semibold text-foreground">Credentials</h3>
             </div>
-          </form>
-        </Form>
+
+            <Form {...createUserForm}>
+              <form onSubmit={createUserForm.handleSubmit(onSubmit)} className="space-y-4" >
+                <FormField
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>E-mail <sup>*</sup></FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="email"
+                          className="border h-14 text-2xl"
+                          placeholder="exemple@email.com"
+                          disabled={mutation.isPending}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  name="username"
+                  control={createUserForm.control}
+                />
+
+                <FormField
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Mot de passe <sup>*</sup></FormLabel>
+                      <FormControl>
+                        <div className="w-full relative">
+                          <Input
+                            type={showPWD ? "text" : "password"}
+                            {...field}
+                            className="border h-14 text-2xl pr-10"
+                            placeholder="*******"
+                            disabled={mutation.isPending}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPWD(!showPWD)}
+                            className="absolute top-1/2 -translate-y-1/2 right-3"
+                            tabIndex={-1}
+                          >
+                            {showPWD ? (
+                              <Eye size={18} className="text-muted-foreground cursor-pointer" />
+                            ) : (
+                              <EyeClosed size={18} className="text-muted-foreground cursor-pointer" />
+                            )}
+                          </button>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  name="password"
+                  control={createUserForm.control}
+                />
+
+                <div className="grid grid-cols-2 gap-2 mt-4 w-full">
+                  <Button
+                    onClick={handleClose}
+                    type="button"
+                    variant="outline"
+                    disabled={mutation.isPending}
+                  >
+                    Fermer
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="bg-green-500 hover:bg-green-600"
+                    disabled={mutation.isPending}
+                  >
+                    {mutation.isPending ? (
+                      <>Création...</>
+                    ) : (
+                      <><Plus className="mr-2" size={18} /> Créer</>
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </Form>
+        </div>
+
       {/* ) : ( */}
-        
-        <Form {...updateUserInfoForm}>
-          <form onSubmit={updateUserInfoForm.handleSubmit(onUpdateUserInfoSubmit)} className="space-y-4 mt-4">
-            
-            <FormField
-              render={({ field }) => (
-                <FormItem className="flex flex-col gap-2 w-full">
-                  <FormLabel>Nom <sup>*</sup></FormLabel>
-                  <FormControl>
-                    <Input 
-                      {...field} 
-                      type="text" 
-                      className="border h-14 text-2xl w-full"
-                      placeholder="Nom"
-                      disabled={completeUserProfileMutation.isPending || !createdUser}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-              name="lastname"
-              control={updateUserInfoForm.control}
-            />
 
-            <FormField
-              render={({ field }) => (
-                <FormItem className="flex flex-col gap-2 w-full">
-                  <FormLabel>Prénoms <sup>*</sup></FormLabel>
-                  <FormControl>
-                    <Input 
-                      {...field} 
-                      type="text" 
-                      className="border h-14 text-2xl"
-                      placeholder="Prénoms"
-                      disabled={completeUserProfileMutation.isPending || !createdUser}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-              name="firstname"
-              control={updateUserInfoForm.control}
-            />
-
-            {/* <FormField
-              render={({ field }) => (
-                <FormItem className="flex flex-col gap-2 w-full">
-                  <FormLabel>N° Téléphone <sup>*</sup></FormLabel>
-                  <FormControl>
-                    <PhoneInput
-                      placeholder="Entrez le numéro de téléphone"
-                      {...field} 
-                      className="border h-14 text-2xl"
-                      international 
-                      defaultCountry="CI"
-                      disabled={completeUserProfileMutation.isPending}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-              name="contact.phonenumber_one"
-              control={updateUserInfoForm.control}
-            /> */}
-
-            <div className="grid grid-cols-2 gap-2 mt-4 w-full">
-              <Button 
-                onClick={handleBack} 
-                type="button" 
-                variant="outline" 
-                disabled={completeUserProfileMutation.isPending || !createdUser}
-              >
-                Retour
-              </Button>
-              <Button 
-                type="submit" 
-                className="bg-green-500 hover:bg-green-600" 
-                disabled={completeUserProfileMutation.isPending || !createdUser}
-              >
-                {completeUserProfileMutation.isPending ? (
-                  <>Mise à jour...</>
-                ) : (
-                  <><Plus className="mr-2" size={18} /> Compléter</>
-                )}
-              </Button>
+        <div className="space-y-4">
+            <div className="flex items-center gap-2 pb-2">
+                <div className="w-1 h-6 bg-gradient-to-b from-indigo-600 to-indigo-400 rounded-full"></div>
+                <h3 className="text-lg font-semibold text-foreground">Mise à jour profile</h3>
             </div>
-          </form>
-        </Form>
+
+            <Form {...updateUserInfoForm}>
+              <form onSubmit={updateUserInfoForm.handleSubmit(onUpdateUserInfoSubmit)} className="space-y-4 mt-4">
+
+                <FormField
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-2 w-full">
+                      <FormLabel>Nom <sup>*</sup></FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="text"
+                          className="border h-14 text-2xl w-full"
+                          placeholder="Nom"
+                          disabled={completeUserProfileMutation.isPending || !createdUser}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  name="lastname"
+                  control={updateUserInfoForm.control}
+                />
+
+                <FormField
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-2 w-full">
+                      <FormLabel>Prénoms <sup>*</sup></FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="text"
+                          className="border h-14 text-2xl"
+                          placeholder="Prénoms"
+                          disabled={completeUserProfileMutation.isPending || !createdUser}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  name="firstname"
+                  control={updateUserInfoForm.control}
+                />
+
+                {/* <FormField
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-2 w-full">
+                      <FormLabel>N° Téléphone <sup>*</sup></FormLabel>
+                      <FormControl>
+                        <PhoneInput
+                          placeholder="Entrez le numéro de téléphone"
+                          {...field}
+                          className="border h-14 text-2xl"
+                          international
+                          defaultCountry="CI"
+                          disabled={completeUserProfileMutation.isPending}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  name="contact.phonenumber_one"
+                  control={updateUserInfoForm.control}
+                /> */}
+
+                <div className="grid grid-cols-2 gap-2 mt-4 w-full">
+                  <Button
+                    onClick={handleBack}
+                    type="button"
+                    variant="outline"
+                    disabled={completeUserProfileMutation.isPending || !createdUser}
+                  >
+                    Retour
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="bg-green-500 hover:bg-green-600"
+                    disabled={completeUserProfileMutation.isPending || !createdUser}
+                  >
+                    {completeUserProfileMutation.isPending ? (
+                      <>Mise à jour...</>
+                    ) : (
+                      <><Plus className="mr-2" size={18} /> Compléter</>
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </Form>
+        </div>
+
       {/* )} */}
-    </>
+    </div>
   );
 };

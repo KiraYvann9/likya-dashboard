@@ -16,12 +16,14 @@ import {useUserStore} from "@/stores/useUserStore";
 import {useMutation} from "@tanstack/react-query";
 import {toast} from "react-hot-toast";
 
-import { supabase } from '@/lib/config/supabase';
 
 import 'react-phone-number-input/style.css'
 
 import {Eye, EyeClosed} from "lucide-react";
 import {getUserInfo} from '@/services/service';
+
+import { auth } from '@/lib/config/firebase'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
 
 const PhoneInput = dynamic(() => import('react-phone-number-input'), {ssr: false});
@@ -50,18 +52,14 @@ export const LoginForm = () => {
 
     const mutation = useMutation({
         mutationFn: async (data: z.infer<typeof schema>) => {
-            const { data: signInData, error } = await supabase.auth.signInWithPassword({
-                email: data.email,
-                password: data.password,
-            });
-            if (error) throw error;
-            return signInData;
+            const credential = await signInWithEmailAndPassword(auth, data.email, data.password);
+            return credential.user;
         },
-        onSuccess: async ({ user }) => {
+        onSuccess: async (user) => {
             try {
-                const userInfo = await getUserInfo(user.id);
+                const userInfo = await getUserInfo(user.uid);
 
-                setUser(userInfo.data);
+                setUser({...user, ...userInfo.data});
 
                 // Set lightweight cookies for proxy checks
                 try {

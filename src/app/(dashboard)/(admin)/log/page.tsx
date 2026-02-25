@@ -24,7 +24,7 @@ export default function LogPage(){
         <CardComponent className={'flex flex-col gap-10 w-full '}>
             <h1>Log</h1>
 
-            <DataTable filterPlaceholder={'Rechercher par ID'} filterBy={'user_id'} data={data || []} columns={columns} isLoading={isLoading}/>
+            <DataTable filterPlaceholder={'Rechercher par ID'} filterBy={'user_id'} data={data?.items || []} columns={columns} isLoading={isLoading}/>
         </CardComponent>
     )
 }

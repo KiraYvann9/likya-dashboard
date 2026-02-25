@@ -45,7 +45,7 @@ export const columns: ColumnDef<Schema>[] = [
         enableSorting: false,
         enableHiding: false,
     },
-    {
+    /*{
         accessorKey: "_id",
         header: ({ column }) => {
             return (
@@ -61,7 +61,7 @@ export const columns: ColumnDef<Schema>[] = [
         cell: ({ }) => (
             <div className="capitalize">{}</div>
         ),
-    },
+    },*/
     {
         accessorKey: "user_id",
         header: "User ID",
@@ -70,9 +70,9 @@ export const columns: ColumnDef<Schema>[] = [
         ),
     },
     {
-        accessorKey: "source",
+        accessorKey: "sender",
         header: () => <div className={'text-left'}>Source</div>,
-        cell: ({ row }) => <div className="lowercase">{row.getValue("source")}</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("sender")}</div>,
     },
     {
         accessorKey: "message",
@@ -82,18 +82,18 @@ export const columns: ColumnDef<Schema>[] = [
         },
     },
     {
-        accessorKey: "created",
-        header: () => <div className="text-center">Date</div>,
-        cell: ({ row }) => {
-            return <div className="text-center font-medium">{format(row.getValue('created'), 'dd/MM/yyyy')}</div>
-        },
-    },
-    {
         accessorKey: "device",
         header: () => <div className="text-center">Device</div>,
         cell: ({ row }) => {
 
             return <div className="text-center font-medium">{row.getValue('device')}</div>
+        },
+    },
+    {
+        accessorKey: "created",
+        header: () => <div className="text-center">Date</div>,
+        cell: ({ row }) => {
+            return <div className="text-center font-medium">{format(row.getValue('created'), 'dd/MM/yyyy')}</div>
         },
     },
     {
@@ -115,11 +115,10 @@ export const columns: ColumnDef<Schema>[] = [
                         <DropdownMenuItem
                             onClick={() => navigator.clipboard.writeText(payment._id)}
                         >
-                            Copy payment ID
+                            Copy l'ID
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={()=>openModal('DETAIL', row.original)}>Détail</DropdownMenuItem>
-                        <DropdownMenuItem onClick={()=>openModal('EDIT',row.original)}>Modifier</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

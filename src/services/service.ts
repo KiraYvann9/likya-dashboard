@@ -19,3 +19,7 @@ export const getUserInfo = async(id: string) =>{
 export const getUserProfile = async() =>{
     return await api.get(`/profiles/me`)
 }
+
+export const getUserRole = async(id: string) =>{
+    return await api.get(`/roles/${id}`)
+}

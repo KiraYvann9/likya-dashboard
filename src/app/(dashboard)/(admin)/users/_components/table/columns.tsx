@@ -4,12 +4,8 @@ import * as React from "react"
 import {
     ColumnDef,
 } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { USerType } from "./TableSchema";
-import { SwitchComponent } from "@/components";
 import ActionsButton from "./ActionsButton"
 
 export const columns: ColumnDef<USerType>[] = [
@@ -35,23 +31,6 @@ export const columns: ColumnDef<USerType>[] = [
         enableSorting: false,
         enableHiding: false,
     },
-    // {
-    //     accessorKey: "_id",
-    //     header: ({ column }) => {
-    //         return (
-    //             <Button
-    //                 variant="ghost"
-    //                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //             >
-    //                 ID
-    //                 <ArrowUpDown />
-    //             </Button>
-    //         )
-    //     },
-    //     cell: ({ row }) => (
-    //         <div className="capitalize">{row.index + 1}</div>
-    //     ),
-    // },
     {
         accessorKey: "lastname",
         header: "Nom",
@@ -87,15 +66,6 @@ export const columns: ColumnDef<USerType>[] = [
             )
         }
     },
-    // {
-    //     accessorKey: "is_active",
-    //     header: () => <div className="text-center">Status</div>,
-    //     cell: ({ row }) => {
-    //         return <div className="text-center font-medium">
-    //             <SwitchComponent status={row.getValue('is_active')} id={row.getValue('_id')} />
-    //         </div>
-    //     },
-    // },
     {
         id: "actions",
         enableHiding: false,

@@ -5,8 +5,14 @@ export type USerType = {
     lastname: string,
     firstname: string,
     contact: {
-        phonenumber_one: string | null
+        phonenumber_one: string | null,
+        phonenumber_two: string | null,
     },
+    address: {
+        street: string,
+        city: string,
+        region: string,
+    }
     email: string,
     matricule: string,
     created_at: string,

@@ -42,6 +42,8 @@ import { getUserProfile } from '@/services/service';
 import { useEffect } from 'react';
 
 import {useProfileSheet} from "@/stores/useProfileSheet";
+import { signOut } from 'firebase/auth';
+import { auth } from '@/lib/config/firebase';
 
 export const NavComponent = () => {
     const clearCurrentUserData = useUserStore(s => s.clearUser)
@@ -131,7 +133,7 @@ export const NavComponent = () => {
                     </Button> */}
 
                     <Separator orientation='vertical' />
-                    <Button variant={'ghost'} title='Déconnecter' className='h-12 w-12' onClick={() => mutation.mutate()}>
+                    <Button variant={'ghost'} title='Déconnecter' className='h-12 w-12' onClick={() => { signOut(auth).catch(() => {}).finally(() => mutation.mutate()) }}>
                         <LogOut size={22} className={'text-red-400'} />
                     </Button>
                 </div>

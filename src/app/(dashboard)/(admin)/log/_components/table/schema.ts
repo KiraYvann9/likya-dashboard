@@ -1,7 +1,7 @@
 export type Schema = {
     _id: string
     user_id: string,
-    source: string,
+    sender: string,
     message: string,
     created:  string,
     device: string,
