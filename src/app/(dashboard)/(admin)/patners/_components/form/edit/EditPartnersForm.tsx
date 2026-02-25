@@ -12,6 +12,7 @@ import { Plus } from "lucide-react";
 import { useUserModal } from "@/stores/useModalStore";
 import api from "@/services/axiosConfig";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useEffect } from "react";
 
 export const EditPartnersForm = () =>{
   const { closeModal, modalData } = useUserModal()
@@ -64,6 +65,31 @@ export const EditPartnersForm = () =>{
   const onSubmit = async(data: EditPartnerFormSchema) => {
     mutation.mutate(data)
   }
+
+  useEffect(() => {
+    if(modalData){
+      form.reset({
+        name: modalData?.name || '',
+      // logo_path: modalData?.logo_path || '',
+      establishment_type: modalData?.establishment_type || '',
+      identification_number: {
+        identification_type: modalData?.identification_number?.identification_type || 'IFU',
+        identification_value: modalData?.identification_number?.identification_value || ''
+      },
+      contact: {
+        email: modalData?.contact?.email || '',
+        phone_number: modalData?.contact?.phone_number || '',
+        website: modalData?.contact?.website || ''
+      },
+      address: {
+        city: modalData?.address?.city || '',
+        country: modalData?.address?.country || '',
+        street: modalData?.address?.street || '',
+        additional_info: modalData?.address?.additional_info || ''
+      }
+      })
+    }
+  }, [modalData, form])
 
   return(
     <Form {...form}>
