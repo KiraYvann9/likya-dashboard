@@ -189,7 +189,6 @@ export const CreateUserForm = () => {
 
   return (
     <div className={'space-y-6'}>
-      {/* {createdUser === null ? ( */}
 
         <div className="space-y-4">
             <div className="flex items-center gap-2 pb-2">
@@ -277,8 +276,6 @@ export const CreateUserForm = () => {
               </form>
             </Form>
         </div>
-
-      {/* ) : ( */}
 
         <div className="space-y-4">
             <div className="flex items-center gap-2 pb-2">

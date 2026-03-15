@@ -62,22 +62,64 @@ export const columns: ColumnDef<Campaign>[] = [
         cell: ({row}) => {
             return (
                 <div className="text-center font-medium">
-                    {row.getValue("target_amount")}
+                    {new Intl.NumberFormat('fr-FR').format(row.original.target_amount)}
                 </div>
             );
         },
     },
     {
-        accessorKey: "contributors",
-        header: () => <div className="text-center">Contributeurs</div>,
+        accessorKey: "minimum_contribution_amount",
+        header: () => <div className="text-center">Contribution Min.</div>,
         cell: ({row}) => {
-            const contributors: Array<string> = row.getValue("contributors");
+            const min_contribution = row.original.minimum_contribution_amount;
+            const formated_amount = new Intl.NumberFormat('fr-FR').format(min_contribution)
             return (
-                <div className="text-center font-medium">{contributors.length}</div>
+                <div className="text-center font-medium">{formated_amount}</div>
             );
         },
     },
-
+    {
+        accessorKey: "start_date",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Date Début
+                    <ArrowUpDown/>
+                </Button>
+            );
+        },
+        cell: ({row}) => (
+            <div className="capitalize">
+                {new Intl.DateTimeFormat("fr", {dateStyle: "medium"}).format(
+                    new Date(row.original.start_date)
+                )}
+            </div>
+        ),
+    },
+    {
+        accessorKey: "end_date",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Date Fin
+                    <ArrowUpDown/>
+                </Button>
+            );
+        },
+        cell: ({row}) => (
+            <div className="capitalize">
+                {new Intl.DateTimeFormat("fr", {dateStyle: "medium"}).format(
+                    new Date(row.original.end_date)
+                )}
+            </div>
+        ),
+    },
     {
         accessorKey: "status",
         header: () => <div className={"text-center"}>Status</div>,

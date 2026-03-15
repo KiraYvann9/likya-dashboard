@@ -98,7 +98,7 @@ export const SidebarItems: sidebarItemType[] = [
     },
     {
         id:  7,
-        title: 'Collecte',
+        title: 'Cagnottes',
         icon: HandCoins,
         link: "/funding",
         permission: ['superuser']
