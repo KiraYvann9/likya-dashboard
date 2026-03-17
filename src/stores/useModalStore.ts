@@ -26,3 +26,12 @@ export const usePrestataireUserModal = create<ModalType>((set)=>({
     openModal: (status, data) => set({isOpen: true, modalData: data, status: status}),
     closeModal:()=> set({isOpen: false})
 }))
+
+
+export const useCategoryModal = create<ModalType>((set)=>({
+    status: 'CREATE',
+    isOpen : false,
+    modalData: {},
+    openModal: (status, data) => set({isOpen: true, modalData: data, status: status}),
+    closeModal:()=> set({isOpen: false})
+}))

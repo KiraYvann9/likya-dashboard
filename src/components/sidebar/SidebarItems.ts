@@ -9,7 +9,8 @@ import {
     SquareActivity,
     UserRoundCog,
     UsersRound,
-    Wallet
+    Wallet,
+    Layers2
 } from 'lucide-react'
 
 export interface sidebarItemType {
@@ -80,6 +81,13 @@ export const SidebarItems: sidebarItemType[] = [
         title: 'Utilisateurs',
         icon: UsersRound,
         link: "/users",
+        permission: ['superuser']
+    },
+    {
+        id: 13,
+        title: 'Catégories',
+        icon: Layers2,
+        link: "/categories",
         permission: ['superuser']
     },
     {
